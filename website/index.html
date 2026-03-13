@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aaditya BuildCons — Win Your Dream Home</title>
+  <meta name="description"
+    content="Join India's most transparent real estate contest. Win a luxury 3BHK flat worth ₹60 Lakhs in Jaipur. Verified process, trusted company." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ══════════════════════════════════════════
+       VIDEO HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* YouTube iframe fills entire hero */
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-video-wrap iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.78vh;
+      /* 16/9 * 100vh */
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 56.25vw;
+      /* 9/16 * 100vw */
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: none;
+    }
+
+    /* Fallback image shown before iframe loads */
+    .hero-video-fallback {
+      position: absolute;
+      inset: 0;
+      background: url('images/family_winning.png') center center / cover no-repeat;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to bottom,
+          rgba(5, 4, 10, 0.55) 0%,
+          rgba(5, 4, 10, 0.30) 40%,
+          rgba(5, 4, 10, 0.70) 70%,
+          rgba(5, 4, 10, 1.00) 100%);
+    }
+
+    /* Gold shimmer vignette */
+    .hero-gold-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(ellipse at 50% 60%, rgba(212, 160, 23, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 4;
+      text-align: center;
+      padding: 0 24px;
+      max-width: 950px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(212, 160, 23, 0.08);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      border-radius: 50px;
+      padding: 7px 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.9s ease both;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-eyebrow .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #FF4444;
+      box-shadow: 0 0 8px rgba(255, 68, 68, 0.8);
+      animation: livePulse 1.6s infinite;
+    }
+
+    @keyframes livePulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(1.4);
+      }
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+      font-family: var(--font-serif);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-title .gold-text {
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+      color: rgba(245, 245, 240, 0.80);
+      animation: fadeUp 0.9s 0.2s ease both;
+      line-height: 1.8;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+
+    /* Floating stats bar */
+    .hero-stats-bar {
+      position: absolute;
+      bottom: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      background: rgba(8, 7, 14, 0.75);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      backdrop-filter: blur(16px);
+      border-radius: 60px;
+      overflow: hidden;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-stat-item {
+      text-align: center;
+      padding: 14px 32px;
+      position: relative;
+    }
+
+    .hero-stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: 0;
+      width: 1px;
+      height: 60%;
+      background: rgba(212, 160, 23, 0.25);
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold-mid), var(--gold-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .hero-stat-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .scroll-arrow {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .scroll-arrow span {
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid var(--gold-mid);
+      border-bottom: 2px solid var(--gold-mid);
+      transform: rotate(45deg);
+      animation: scrollBounce 1.5s infinite;
+      opacity: 0.7;
+    }
+
+    .scroll-arrow span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes scrollBounce {
+
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: rotate(45deg) translateY(0);
+      }
+
+      50% {
+        opacity: 0.9;
+        transform: rotate(45deg) translateY(6px);
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       WINNER STORY BAND
+    ══════════════════════════════════════════ */
+    .winner-band {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(90deg, #0A0A0F 0%, #110E00 50%, #0A0A0F 100%);
+      border-top: 1px solid rgba(212, 160, 23, 0.15);
+      border-bottom: 1px solid rgba(212, 160, 23, 0.15);
+      padding: 64px 24px;
+    }
+
+    .winner-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .winner-img-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .winner-img-wrap img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius-lg);
+    }
+
+    .winner-img-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(8, 7, 14, 0.85);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .winner-img-badge .badge-icon {
+      font-size: 1.6rem;
+    }
+
+    .winner-img-badge .badge-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .winner-img-badge .badge-text strong {
+      display: block;
+      color: var(--gold-bright);
+      font-size: 0.88rem;
+    }
+
+
+    .winner-content .section-label {
+      margin-bottom: 0.5rem;
+    }
+
+    .winner-content h2 {
+      margin-bottom: 1rem;
+    }
+
+    .winner-content p {
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .winner-quote {
+      background: linear-gradient(135deg, rgba(212, 160, 23, 0.07), rgba(212, 160, 23, 0.02));
+      border-left: 3px solid var(--gold-mid);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .winner-quote blockquote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+
+    .winner-quote cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--gold-mid);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ══════════════════════════════════════════
+       PRIZE SECTION
+    ══════════════════════════════════════════ */
+    .prize-section {
+      padding: 100px 24px;
+    }
+
+    .prize-section .inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grand-prize-card {
+      background: linear-gradient(135deg, #0E0C02 0%, #1A1205 50%, #0E0C02 100%);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(212, 160, 23, 0.08), 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .grand-prize-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% -20%, rgba(255, 215, 0, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 120%, rgba(184, 134, 11, 0.1) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .grand-prize-tag {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright));
+      color: #111;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+    }
+
+    .grand-prize-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      border: 2px solid rgba(212, 160, 23, 0.3);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .grand-prize-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-mid);
+      margin-bottom: 0.6rem;
+    }
+
+    .grand-prize-value {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright), var(--gold-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .grand-prize-detail {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.7;
+    }
+
+    .prize-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.8rem;
+    }
+
+    .prize-feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212, 160, 23, 0.08);
+      border: 1px solid rgba(212, 160, 23, 0.2);
+      color: var(--gold-light);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 50px;
+    }
+
+    .prize-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .prize-card {
+      background: var(--dark-card);
+      border: 1px solid rgba(212, 160, 23, 0.15);
+      border-radius: var(--radius-md);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prize-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 160, 23, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .prize-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(212, 160, 23, 0.45);
+      box-shadow: 0 0 30px rgba(212, 160, 23, 0.2), 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .prize-rank {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .prize-amount {
+      font-family: var(--font-serif);
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold-mid), var(--gold-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+    }
+
+    .prize-winners {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .prize-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    /* ══════════════════════════════════════════
+       TRUST BADGES ROW
+    ══════════════════════════════════════════ */
+    .trust-section {
+      padding: 60px 24px;
+      border-top: 1px solid rgba(212, 160, 23, 0.08);
+      border-bottom: 1px solid rgba(212, 160, 23, 0.08);
+    }
+
+    .trust-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      align-items: center;
+      text-align: center;
+    }
+
+
+    .trust-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(212, 160, 23, 0.15), rgba(212, 160, 23, 0.04));
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.4rem;
+    }
+
+    .trust-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .trust-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ══════════════════════════════════════════
+       HOW IT WORKS
+    ══════════════════════════════════════════ */
+    .how-section {
+      padding: 100px 24px;
+      background: radial-gradient(ellipse at center, rgba(212, 160, 23, 0.05) 0%, transparent 70%);
+    }
+
+    .how-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .steps-connector {
+      position: absolute;
+      top: 38px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold-bright), var(--gold-deep), transparent);
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .step-card {
+      text-align: center;
+      padding: 2.2rem 1.5rem;
+      background: var(--dark-card);
+      border: 1px solid rgba(212, 160, 23, 0.12);
+      border-radius: var(--radius-md);
+      position: relative;
+      z-index: 1;
+      transition: all var(--transition);
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px rgba(212, 160, 23, 0.2), 0 8px 40px rgba(0, 0, 0, 0.5);
+      border-color: rgba(212, 160, 23, 0.4);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright));
+      color: #111;
+      font-weight: 800;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.4rem;
+      box-shadow: 0 4px 24px rgba(212, 160, 23, 0.5);
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-card p {
+      font-size: 0.88rem;
+    }
+
+    /* ══════════════════════════════════════════
+       ENTRY FEE CTA
+    ══════════════════════════════════════════ */
+    .fee-section {
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .fee-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(212, 160, 23, 0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .fee-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #0E0C02, #1A1205, #0E0C02);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(212, 160, 23, 0.12), 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .fee-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(212, 160, 23, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .fee-amount {
+      font-family: var(--font-serif);
+      font-size: 5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright), var(--gold-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .fee-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .fee-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .fee-perk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .fee-perk-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(212, 160, 23, 0.15);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--gold-bright);
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       GOLDEN ACCENT SECTION DIVIDER
+    ══════════════════════════════════════════ */
+    .gold-section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 800px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .gold-section-divider .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.4), transparent);
+    }
+
+    .gold-section-divider .diamond {
+      width: 10px;
+      height: 10px;
+      background: var(--gold-mid);
+      transform: rotate(45deg);
+      box-shadow: 0 0 12px rgba(212, 160, 23, 0.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grand-prize-card {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+      }
+
+      .prize-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps-connector {
+        display: none;
+      }
+
+      .hero-stats-bar {
+        flex-wrap: wrap;
+        border-radius: 20px;
+      }
+
+      .winner-band-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-section .inner {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .prize-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-section .inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stat-item {
+        padding: 10px 18px;
+      }
+
+      .fee-amount {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Three.js global canvas -->
+  <canvas id="threejs-canvas"></canvas>
+
+  <!-- ══════════ NAVIGATION ══════════ -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">Aaditya BuildCons</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="notice.html">Notice</a></li>
+      <li><a href="status.html">Check Status</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="status.html" class="btn btn-gold" style="padding:10px 24px;font-size:0.85rem;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:4px;">
+          <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
+        </svg>
+        Check My Status
+      </a>
+    </div>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="terms.html">Terms</a>
+    <a href="notice.html">Notice</a>
+    <a href="status.html">Check Status</a>
+    <a href="status.html" class="btn btn-gold" style="margin-top:8px;text-align:center;">Check My Status</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+     HERO — YouTube video of family winning dream home
+════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <!-- Fallback background image while video loads -->
+    <div class="hero-video-fallback"></div>
+
+    <!-- YouTube embedded video (autoplay, muted, loop, no controls) -->
+    <div class="hero-video-wrap">
+      <iframe id="heroVideoFrame"
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&showinfo=0&rel=0&disablekb=1&fs=0&iv_load_policy=3&start=0&enablejsapi=1"
+        allow="autoplay; encrypted-media" allowfullscreen title="Family winning their dream home"></iframe>
+    </div>
+
+    <div class="hero-overlay"></div>
+    <div class="hero-gold-vignette"></div>
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="live-dot"></span> Live Contest — Limited Entries Remaining</div>
+      <h1 class="hero-title">
+        Win a <span class="gold-text">Luxury 3BHK Flat</span>
+        Worth ₹60 Lakhs
+      </h1>
+      <p class="hero-sub">India's most transparent real estate contest. Your dream home in the heart of Jaipur — one
+        lucky family's entire life changes forever.</p>
+      <div class="hero-btns">
+        <a href="#contest" class="btn btn-gold" style="font-size:1rem;padding:16px 38px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:6px;">
+            <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
+          </svg>
+          Join the Contest
+        </a>
+        <a href="about.html" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Floating stats bar -->
+    <div class="hero-stats-bar">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">₹60L</div>
+        <div class="hero-stat-label">Grand Prize</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">100+</div>
+        <div class="hero-stat-label">Cash Winners</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">₹1,111</div>
+        <div class="hero-stat-label">Entry Fee</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" id="counter-entries">0</div>
+        <div class="hero-stat-label">Entries So Far</div>
+      </div>
+    </div>
+
+    <div class="scroll-arrow">
+      <span></span><span></span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+     TRUST BADGES
+════════════════════════════════════════════════════════ -->
+  <section class="trust-section">
+    <div class="inner">
+      <div class="trust-item fade-up">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3L2 8V21H22V8L12 3ZM7 19H5V11H7V19ZM11 19H9V11H11V19ZM15 19H13V11H15V19ZM19 19H17V11H19V19Z" fill="var(--gold-mid)"/>
+          </svg>
+        </div>
+        <div class="trust-title">Legally Registered</div>
+        <div class="trust-desc">Licensed real estate company under Indian law</div>
+      </div>
+      <div class="trust-item fade-up fade-up-delay-1">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="8" stroke="var(--gold-mid)" stroke-width="2.5"/>
+            <path d="M21 21L16.65 16.65" stroke="var(--gold-mid)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="trust-title">100% Transparent</div>
+        <div class="trust-desc">All winners verified & published publicly</div>
+      </div>
+      <div class="trust-item fade-up fade-up-delay-2">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15 8H9L12 2Z" fill="var(--gold-mid)"/>
+            <path d="M19 6H17V11C17 13.76 14.76 16 12 16C9.24 16 7 13.76 7 11V6H5C3.9 6 3 6.9 3 8V9C3 11.21 4.79 13 7 13V15.5C7 16.83 8.08 17.91 9.4 17.91H10V20H8V22H16V20H14V17.91H14.6C15.92 17.91 17 16.83 17 15.5V13C19.21 13 21 11.21 21 9V8C21 6.9 20.1 6 19 6Z" fill="var(--gold-mid)"/>
+          </svg>
+        </div>
+        <div class="trust-title">Merit-Based Draw</div>
+        <div class="trust-desc">Evaluated by an independent expert jury</div>
+      </div>
+      <div class="trust-item fade-up fade-up-delay-3">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="11" rx="2" stroke="var(--gold-mid)" stroke-width="2"/>
+            <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="var(--gold-mid)" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="trust-title">Secure Payments</div>
+        <div class="trust-desc">SSL-encrypted, direct bank transfers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+     WINNER STORY / SOCIAL PROOF
+════════════════════════════════════════════════════════ -->
+  <section class="winner-band">
+    <div class="winner-band-inner">
+      <div class="winner-img-wrap fade-up">
+        <img src="images/family_winning.png" alt="Happy family winning their dream home" />
+        <div class="winner-img-badge">
+          <div class="badge-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L15 8H9L12 2Z" fill="#FFD700"/>
+          <path d="M19 6H17V11C17 13.76 14.76 16 12 16C9.24 16 7 13.76 7 11V6H5C3.9 6 3 6.9 3 8V9C3 11.21 4.79 13 7 13V15.5C7 16.83 8.08 17.91 9.4 17.91H10V20H8V22H16V20H14V17.91H14.6C15.92 17.91 17 16.83 17 15.5V13C19.21 13 21 11.21 21 9V8C21 6.9 20.1 6 19 6ZM5 9V8H7V11C7 11.46 6.88 11.88 6.66 12.24C5.7 11.81 5 10.98 5 9ZM19 9C19 10.98 18.3 11.81 17.34 12.24C17.12 11.88 17 11.46 17 11V8H19V9Z" fill="#FFD700"/>
+        </svg>
+      </div>
+          <div class="badge-text">
+            <strong>Your Dream Home Awaits</strong>
+            Main Sikar Road, Jaipur · 1365 sq.ft.
+          </div>
+        </div>
+      </div>
+      <div class="winner-content fade-up fade-up-delay-1">
+        <p class="section-label">Why Families Trust Us</p>
+        <h2>A Real Chance. <span class="gold-text">A Real Home.</span></h2>
+        <div class="gold-divider left"></div>
+        <p>For thousands of families across India, owning a home feels like a distant dream. Aaditya BuildCons was
+          founded to change that — giving every deserving family a fair, honest shot at winning a premium property with
+          zero tricks and full transparency.</p>
+        <div class="winner-quote">
+          <blockquote>"We never imagined we'd own a flat in Jaipur this soon. The process was so smooth and completely
+            genuine."</blockquote>
+          <cite>— Priya & Rajan Sharma, Past Participants · Jaipur</cite>
+        </div>
+        <a href="#contest" class="btn btn-gold">Enter the Contest Today →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+     PRIZE STRUCTURE
+════════════════════════════════════════════════════════ -->
+  <section id="contest" class="prize-section">
+    <div class="inner">
+      <div class="section-center fade-up" style="margin-bottom:4rem;">
+        <p class="section-label">Prize Structure</p>
+        <h2>Win Big. <span class="gold-text">Win Your Dream.</span></h2>
+        <div class="gold-divider"></div>
+        <p style="max-width:520px;margin:0 auto;">Every participant gets a real chance — from our grand flat to 100
+          assured cash prizes. Rewards truly await.</p>
+      </div>
+
+      <!-- Grand Prize -->
+      <div class="grand-prize-card fade-up">
+        <div class="grand-prize-tag">Grand Prize</div>
+        <img src="images/luxury_flat.png" alt="Luxury 3BHK Flat in Jaipur" class="grand-prize-image" />
+        <div>
+          <div class="grand-prize-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:4px;">
+              <path d="M12 2L15 8H9L12 2Z" fill="currentColor"/>
+              <path d="M19 6H17V11C17 13.76 14.76 16 12 16C9.24 16 7 13.76 7 11V6H5C3.9 6 3 6.9 3 8V9C3 11.21 4.79 13 7 13V15.5C7 16.83 8.08 17.91 9.4 17.91H10V20H8V22H16V20H14V17.91H14.6C15.92 17.91 17 16.83 17 15.5V13C19.21 13 21 11.21 21 9V8C21 6.9 20.1 6 19 6Z" fill="currentColor"/>
+            </svg>
+            1st Prize — 1 Exclusive Winner
+          </div>
+          <div class="grand-prize-value">₹60,00,000</div>
+          <h3 style="margin-bottom:0.75rem;">Luxury 3BHK Flat</h3>
+          <p class="grand-prize-detail">1365 sq.ft. fully appointed apartment at <strong>Main Sikar Road,
+              Jaipur</strong>. Premier location, luxury fittings, complete legal handover to the winner.</p>
+          <div class="prize-features">
+            <span class="prize-feature-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V10M21 10V17C21 18.1046 20.1046 19 19 19H17M21 10C19.8954 10 19 10.8954 19 12V14M3 10V17C3 18.1046 3.89543 19 5 19H7M3 10C4.10457 10 5 10.8954 5 12V14M7 19V17M7 19H17M17 19V17M7 17H17M7 17V14M17 17V14M7 14H17M7 14V12C7 10.8954 7.89543 10 9 10H15C16.1046 10 17 10.8954 17 12V14" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              3 Bedrooms
+            </span>
+            <span class="prize-feature-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 5H17M5 7H19V16C19 18.2091 17.2091 20 15 20H9C6.79086 20 5 18.2091 5 16V7ZM7 5V3H17V5" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              2 Bathrooms
+            </span>
+            <span class="prize-feature-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="11" width="18" height="7" rx="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M5 11L7.5 5H16.5L19 11" stroke="currentColor" stroke-width="2"/>
+                <circle cx="7.5" cy="18" r="2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="16.5" cy="18" r="2" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Parking
+            </span>
+            <span class="prize-feature-chip">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21C16 17 20 13.4183 20 9C20 4.58172 16.4183 1 12 1C7.58172 1 4 4.58172 4 9C4 13.4183 8 17 12 21Z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Jaipur
+            </span>
+          </div>
+          <a href="#enter" class="btn btn-gold">Participate Now — ₹1,111</a>
+        </div>
+      </div>
+
+      <!-- Other Prizes -->
+      <div class="prize-grid">
+        <div class="prize-card fade-up fade-up-delay-1">
+          <span class="prize-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="14" r="7" stroke="var(--gold-mid)" stroke-width="2"/>
+              <path d="M12 14L14 16L10 16L12 14Z" fill="var(--gold-mid)"/>
+              <path d="M15 7L12 2L9 7" stroke="var(--gold-mid)" stroke-width="2"/>
+            </svg>
+          </span>
+          <div class="prize-rank">2nd Prize</div>
+          <div class="prize-amount">₹1,11,000</div>
+          <div class="prize-winners">1 Winner · Cash</div>
+        </div>
+        <div class="prize-card fade-up fade-up-delay-1">
+          <span class="prize-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="14" r="7" stroke="var(--gold-mid)" stroke-width="2"/>
+              <path d="M12 14L10 16H14L12 14Z" fill="var(--gold-mid)"/>
+              <path d="M15 7L12 2L9 7" stroke="var(--gold-mid)" stroke-width="2"/>
+            </svg>
+          </span>
+          <div class="prize-rank">3rd Prize</div>
+          <div class="prize-amount">₹1,11,000</div>
+          <div class="prize-winners">1 Winner · Cash</div>
+        </div>
+        <div class="prize-card fade-up fade-up-delay-2">
+          <span class="prize-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15L15 18L12 21L9 18L12 15Z" fill="var(--gold-mid)"/>
+              <path d="M12 2L15 8H9L12 2Z" fill="var(--gold-mid)"/>
+              <circle cx="12" cy="10" r="5" stroke="var(--gold-mid)" stroke-width="2"/>
+            </svg>
+          </span>
+          <div class="prize-rank">4th – 9th Prize</div>
+          <div class="prize-amount">₹51,000</div>
+          <div class="prize-winners">6 Winners · Cash Each</div>
+        </div>
+        <div class="prize-card fade-up fade-up-delay-3">
+          <span class="prize-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="10" width="16" height="11" rx="2" stroke="var(--gold-mid)" stroke-width="2"/>
+              <path d="M12 10V21" stroke="var(--gold-mid)" stroke-width="2"/>
+              <path d="M4 14H20" stroke="var(--gold-mid)" stroke-width="2"/>
+              <path d="M12 10C12 10 9 5 12 5C15 5 12 10 12 10Z" stroke="var(--gold-mid)" stroke-width="2"/>
+              <path d="M12 10C12 10 15 5 12 5C9 5 12 10 12 10Z" stroke="var(--gold-mid)" stroke-width="2"/>
+            </svg>
+          </span>
+          <div class="prize-rank">10th – 100th Prize</div>
+          <div class="prize-amount">₹10,000</div>
+          <div class="prize-winners">91 Winners · Cash Each</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════════════ -->
+  <section class="how-section">
+    <div class="inner">
+      <div class="section-center fade-up">
+        <p class="section-label">Process</p>
+        <h2>How <span class="gold-text">It Works</span></h2>
+        <div class="gold-divider"></div>
+        <p style="max-width:500px;margin:0 auto;">A simple, transparent 4-step journey to your dream home.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="steps-connector"></div>
+        <div class="step-card fade-up fade-up-delay-1">
+          <div class="step-num">1</div>
+          <h3>Fill the Form</h3>
+          <p>Submit your details accurately to register for the contest. Takes under 3 minutes.</p>
+        </div>
+        <div class="step-card fade-up fade-up-delay-2">
+          <div class="step-num">2</div>
+          <h3>Make Payment</h3>
+          <p>Pay ₹1,111/- via UPI or bank transfer — no hidden charges, no surprises.</p>
+        </div>
+        <div class="step-card fade-up fade-up-delay-3">
+          <div class="step-num">3</div>
+          <h3>Expert Evaluation</h3>
+          <p>Our independent jury evaluates all entries fairly on merit, not luck.</p>
+        </div>
+        <div class="step-card fade-up fade-up-delay-4">
+          <div class="step-num">4</div>
+          <h3>Win Your Home</h3>
+          <p>Winners are announced publicly on our website and contacted directly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+     ENTRY FEE CTA
+════════════════════════════════════════════════════════ -->
+  <section id="enter" class="fee-section">
+    <div class="fee-card fade-up">
+      <p class="section-label" style="margin-bottom:0.5rem;">Participation Fee</p>
+      <div class="fee-amount">₹1,111</div>
+      <p class="fee-label">One-time · Non-refundable · No hidden charges</p>
+      <div class="fee-perks">
+        <div class="fee-perk">
+          <div class="fee-perk-icon">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+Eligible for ₹60 Lakh flat + all prizes
+        </div>
+        <div class="fee-perk">
+          <div class="fee-perk-icon">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>Verified, legally compliant process
+        </div>
+        <div class="fee-perk">
+          <div class="fee-perk-icon">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>100% transparent — results published publicly
+        </div>
+        <div class="fee-perk">
+          <div class="fee-perk-icon">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>Instant confirmation via email/SMS
+        </div>
+      </div>
+      <a href="terms.html" class="btn btn-gold"
+        style="margin-bottom:16px;width:100%;justify-content:center;font-size:1.05rem;">View Full Terms &
+        Participate</a>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">By participating, you agree to our <a
+          href="policy.html">Privacy Policy</a> and <a href="terms.html">Terms & Conditions</a>.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo" style="font-size:1.5rem;">Aaditya BuildCons</div>
+        <p>A trusted licensed real estate company empowering families to own their dream homes through fair, transparent
+          contests.</p>
+        <p style="margin-top:1rem;font-size:0.85rem;"><a
+            href="mailto:ar.aadityasharma@gmail.com">ar.aadityasharma@gmail.com</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="notice.html">Notice</a></li>
+          <li><a href="status.html">Check Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Aaditya BuildCons. All rights reserved. Licensed Real Estate Company.</span>
+      <span style="color:rgba(212,160,23,0.5);">
+        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span>Formerly known as XCricStock11</span>
+    </div>
+  </footer>
+
+  <!-- ══════ SCRIPTS ══════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    /* ── Hero Golden Orbs (Three.js) ── */
+    (function initHeroOrbs() {
+      const canvas = document.getElementById('hero-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      camera.position.z = 5;
+
+      const orbs = [];
+      const goldPalette = [0xD4A017, 0xFFD700, 0xB8860B, 0xFFF1A8, 0xFFE05C];
+      for (let i = 0; i < 22; i++) {
+        const r = Math.random() * 0.22 + 0.04;
+        const geo = new THREE.SphereGeometry(r, 16, 16);
+        const mat = new THREE.MeshBasicMaterial({
+          color: goldPalette[i % goldPalette.length],
+          transparent: true,
+          opacity: Math.random() * 0.25 + 0.06
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(
+          (Math.random() - 0.5) * 9,
+          (Math.random() - 0.5) * 5.5,
+          (Math.random() - 0.5) * 3
+        );
+        mesh.userData.speed = Math.random() * 0.35 + 0.15;
+        mesh.userData.offset = Math.random() * Math.PI * 2;
+        scene.add(mesh);
+        orbs.push(mesh);
+      }
+
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        orbs.forEach(o => {
+          o.position.y += Math.sin(t * o.userData.speed + o.userData.offset) * 0.004;
+          o.position.x += Math.cos(t * o.userData.speed * 0.6 + o.userData.offset) * 0.002;
+        });
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    /* ── Entries Counter ── */
+    const counterEl = document.getElementById('counter-entries');
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { animateCounter(counterEl, 3247); obs.disconnect(); }
+    });
+    obs.observe(counterEl);
+
+    /* ── Video fallback: hide fallback bg once iframe is ready ── */
+    document.getElementById('heroVideoFrame').addEventListener('load', () => {
+      const fallback = document.querySelector('.hero-video-fallback');
+      setTimeout(() => { if (fallback) fallback.style.opacity = '0'; }, 2000);
+    });
+  </script>
+</body>
+
+</html>

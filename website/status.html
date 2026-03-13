@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Check Status — Aaditya BuildCons</title>
+    <meta name="description"
+        content="Check the status of your contest entry with Aaditya BuildCons using your registered email and phone number." />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .status-wrap {
+            max-width: 580px;
+            margin: 60px auto 100px;
+            padding: 0 24px;
+        }
+
+        .status-card {
+            background: linear-gradient(135deg, var(--dark-card), #12100A);
+            border: 1px solid rgba(212, 160, 23, 0.28);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2.5rem;
+            box-shadow: 0 0 50px rgba(212, 160, 23, 0.08);
+        }
+
+        .status-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: floatY 4s ease-in-out infinite;
+        }
+
+        .status-card h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card>p {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold-mid);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group input:focus {
+            border-color: var(--gold-mid);
+            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright));
+            color: #111;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            transition: all var(--transition);
+            box-shadow: 0 4px 20px rgba(212, 160, 23, 0.35);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212, 160, 23, 0.5);
+        }
+
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(212, 160, 23, 0.06);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            border-radius: var(--radius-sm);
+            display: none;
+            text-align: center;
+        }
+
+        .result-box.show {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+
+        .result-box .result-status {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-serif);
+            color: var(--gold-bright);
+        }
+
+        .result-box p {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .divider-or {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .divider-or::before,
+        .divider-or::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .info-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="threejs-canvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">Aaditya BuildCons</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="notice.html">Notice</a></li>
+            <li><a href="status.html" class="active">Check Status</a></li>
+        </ul>
+        <div class="nav-cta"><a href="status.html" class="btn btn-gold"
+                style="padding:10px 22px;font-size:0.85rem;">Check My Status</a></div>
+        <button class="hamburger"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="mobile-nav">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="terms.html">Terms</a>
+        <a href="notice.html">Notice</a><a href="status.html">Check Status</a>
+        <a href="status.html" class="btn btn-gold" style="margin-top:8px;text-align:center;">Check My Status</a>
+    </div>
+
+    <div class="page-hero">
+        <p class="section-label">Entry Lookup</p>
+        <h1>Check <span class="gold-text">Contest Status</span></h1>
+        <div class="gold-divider"></div>
+        <p>Enter your registered details below to view your contest entry status.</p>
+    </div>
+
+    <div class="status-wrap">
+        <div class="status-card fade-up">
+            <div class="status-icon">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; margin: 0 auto;">
+                    <circle cx="11" cy="11" r="8" stroke="#FFD700" stroke-width="2.5"/>
+                    <path d="M21 21L16.65 16.65" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Verify Your <span class="gold-text">Entry</span></h2>
+            <p>Enter your details to check if your entry was received successfully.</p>
+
+            <form id="statusForm" onsubmit="handleCheck(event)">
+                <div class="form-group">
+                    <label for="email">Registered Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Registered Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+91 99999 99999" required />
+                </div>
+                <button type="submit" class="btn-submit">Check My Status</button>
+            </form>
+
+            <div class="result-box" id="resultBox">
+                <div class="result-status" id="resultStatus">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 8px;">
+                        <path d="M20 6L9 17L4 12" stroke="#FFD700" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Entry Confirmed
+                </div>
+                <p id="resultMsg">Your entry has been registered. Results will be announced on the official website
+                    soon. Stay tuned!</p>
+            </div>
+
+            <div class="divider-or">OR</div>
+            <p class="info-note">Winners are announced on this website and contacted directly via their registered email
+                and phone number. Keep an eye on the <a href="notice.html">Notice</a> page.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="nav-logo" style="font-size:1.5rem;">Aaditya BuildCons</div>
+                <p>A trusted name in real estate, empowering people to own their dream homes through fair and
+                    transparent contests.</p>
+                <p style="margin-top:1rem;font-size:0.85rem;"><a
+                        href="mailto:ar.aadityasharma@gmail.com">ar.aadityasharma@gmail.com</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="notice.html">Notice</a></li>
+                    <li><a href="status.html">Check Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Aaditya BuildCons. All rights reserved. Licensed Real Estate Company.</span>
+            <span>Formerly known as XCricStock11</span>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function handleCheck(e) {
+            e.preventDefault();
+            const box = document.getElementById('resultBox');
+            const status = document.getElementById('resultStatus');
+            const msg = document.getElementById('resultMsg');
+            // Demo response
+            status.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M12 2V22M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFD700" stroke-width="2"/>
+                    <path d="M12 6V12L16 14" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Entry Under Review`;
+            msg.textContent = 'Your details were found. Our jury is currently evaluating all entries. Results will be declared on the official website very soon!';
+            box.classList.add('show');
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+
+</html>

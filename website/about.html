@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>About Us — Aaditya BuildCons</title>
+    <meta name="description"
+        content="Learn about Aaditya BuildCons — formerly XCricStock11 — a full-service Architecture, Interior Design & Construction firm based in Jaipur." />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .about-image-wrap {
+            position: relative;
+        }
+
+        .about-image-wrap img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            object-fit: cover;
+            height: 440px;
+        }
+
+        .about-image-badge {
+            position: absolute;
+            bottom: -20px;
+            left: 24px;
+            background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright));
+            color: #111;
+            font-weight: 700;
+            padding: 14px 22px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .about-text h2 {
+            margin-bottom: 0.75rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.2rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 2.5rem;
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(212, 160, 23, 0.1);
+            border: 1px solid rgba(212, 160, 23, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .advantage-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .advantage-list li {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 1.2rem 1.4rem;
+            background: var(--dark-card);
+            border: 1px solid rgba(212, 160, 23, 0.1);
+            border-radius: var(--radius-sm);
+            margin-bottom: 14px;
+            transition: border-color var(--transition);
+        }
+
+        .advantage-list li:hover {
+            border-color: rgba(212, 160, 23, 0.35);
+        }
+
+        .advantage-list .check {
+            color: var(--gold-bright);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .advantage-list h4 {
+            font-size: 1rem;
+            font-family: var(--font-serif);
+            margin-bottom: 0.25rem;
+        }
+
+        .advantage-list p {
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="threejs-canvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">Aaditya BuildCons</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="notice.html">Notice</a></li>
+            <li><a href="status.html">Check Status</a></li>
+        </ul>
+        <div class="nav-cta"><a href="status.html" class="btn btn-gold"
+                style="padding:10px 22px;font-size:0.85rem;">Check My Status</a></div>
+        <button class="hamburger"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="mobile-nav">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="terms.html">Terms</a>
+        <a href="notice.html">Notice</a><a href="status.html">Check Status</a>
+        <a href="status.html" class="btn btn-gold" style="margin-top:8px;text-align:center;">Check My Status</a>
+    </div>
+
+    <div class="page-hero">
+        <p class="section-label">Our Story</p>
+        <h1>About <span class="gold-text">Aaditya BuildCons</span></h1>
+        <div class="gold-divider"></div>
+        <p>Formerly known as XCricStock11, we are a full-service Architecture, Interior Design & Construction firm built
+            on trust, excellence, and transparency.</p>
+    </div>
+
+    <div class="section">
+        <!-- About Intro -->
+        <div class="about-grid">
+            <div class="about-image-wrap fade-up">
+                <img src="images/hero.png" alt="Aaditya BuildCons Building" />
+                <div class="about-image-badge">Est. Since XCricStock11 Era</div>
+            </div>
+            <div class="about-text fade-up fade-up-delay-1">
+                <p class="section-label">Who We Are</p>
+                <h2>Your Single Accountable <span class="gold-text">Partner</span></h2>
+                <div class="gold-divider left"></div>
+                <p>Welcome to AadityaBuildCons, a full-service firm specializing in integrated Architecture, Interior
+                    Design, and Construction. Our mission is to simplify the building process for our clients by serving
+                    as a single, accountable partner from the initial sketch to the final handover.</p>
+                <p>While our name is new, our commitment to project excellence has a solid foundation. We were formerly
+                    known as XCricStock11. This strategic evolution allows us to focus entirely on the built
+                    environment, offering a comprehensive suite of services that ensure seamless execution and superior
+                    quality in every project we undertake.</p>
+                <a href="index.html" class="btn btn-gold" style="margin-top:0.5rem;">Explore the Contest</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services -->
+    <div
+        style="background: radial-gradient(ellipse at center, rgba(212,160,23,0.05) 0%, transparent 70%); padding: 60px 24px;">
+        <div class="section" style="padding: 0;">
+            <div class="section-center fade-up">
+                <p class="section-label">What We Do</p>
+                <h2>Complete <span class="gold-text">Project Lifecycle</span></h2>
+                <div class="gold-divider"></div>
+            </div>
+            <div class="services-grid">
+                <div class="gold-card fade-up fade-up-delay-1">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3L2 8V21H22V8L12 3ZM7 19H5V11H7V19ZM11 19H9V11H11V19ZM15 19H13V11H15V19ZM19 19H17V11H19V19ZM12 8.5C10.62 8.5 9.5 7.38 9.5 6C9.5 4.62 10.62 3.5 12 3.5C13.38 3.5 14.5 4.62 14.5 6C14.5 7.38 13.38 8.5 12 8.5Z" fill="#FFD700"/>
+                        </svg>
+                    </div>
+                    <h3>Architecture & Design</h3>
+                    <p>Creating functional, sustainable, and aesthetically striking blueprints optimized for every
+                        purpose and client vision.</p>
+                </div>
+                <div class="gold-card fade-up fade-up-delay-2">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 3L20 7.5V16L11 20.5L2 16V7.5L11 3Z" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11 3V11.75L20 7.5" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11 20.5V11.75L2 7.5" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 16L11 11.75L2 16" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Interior Design</h3>
+                    <p>Transforming structures into personalized spaces with expert spatial planning, custom lighting,
+                        and bespoke fixtures.</p>
+                </div>
+                <div class="gold-card fade-up fade-up-delay-3">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 6.5C19.46 6.5 17.41 8.56 17.41 11.1H21.28L21.31 11.13L16.22 16.22L13.11 13.11L14.47 11.75C14.15 11.39 13.9 11 13.72 10.59L11.75 12.56L10.59 11.4C10 10.81 9.3 10.37 8.54 10.12V4H10.54V2H4.54V4H6.54V10.12C5.78 10.37 5.08 10.81 4.49 11.4L3.33 12.56L5.3 14.53C4.89 14.71 4.5 14.96 4.14 15.28L2.78 13.92L1.31 15.39L6.4 20.48L7.87 19.01L6.51 17.65C6.83 17.33 7.08 16.94 7.26 16.53L9.23 18.5L10.39 17.34C11.64 16.09 13.56 15.89 15.03 16.74L16.22 15.55L21.31 20.64L22.78 19.17L17.69 14.08L18.88 12.89C19.73 14.36 19.53 16.28 18.28 17.53L17.12 18.69L19.09 20.66C19.5 20.48 19.89 20.23 20.25 19.91L21.61 21.27L23.08 19.8L22 18.72V14.85C24.54 14.85 26.59 12.79 26.59 10.25V6.5H22Z" fill="#FFD700"/>
+                        </svg>
+                    </div>
+                    <h3>Construction & Building</h3>
+                    <p>Bringing designs to life with strict adherence to timelines, quality standards, and transparent
+                        budget discipline.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advantage -->
+    <div class="section">
+        <div class="fade-up">
+            <p class="section-label">Why Choose Us</p>
+            <h2>The Aaditya BuildCons <span class="gold-text">Advantage</span></h2>
+            <div class="gold-divider left"></div>
+            <p style="max-width:540px;">By handling design, interiors, and construction in-house, we offer unmatched
+                continuity, accountability, and transparency.</p>
+        </div>
+        <ul class="advantage-list" style="max-width:720px;">
+            <li class="fade-up">
+                <span class="check">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
+                    </svg>
+                </span>
+                <div>
+                    <h4>Seamless Project Flow</h4>
+                    <p>Our unified team ensures perfect coordination between design intent and construction execution,
+                        eliminating common miscommunication and delays.</p>
+                </div>
+            </li>
+            <li class="fade-up fade-up-delay-1">
+                <span class="check">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
+                    </svg>
+                </span>
+                <div>
+                    <h4>Integrity and Transparency</h4>
+                    <p>Succeeding XCricStock11, we are committed to earning your trust through open communication with
+                        no hidden charges from consultation to completion.</p>
+                </div>
+            </li>
+            <li class="fade-up fade-up-delay-2">
+                <span class="check">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
+                    </svg>
+                </span>
+                <div>
+                    <h4>Client-Centric Approach</h4>
+                    <p>Your vision is the driving force behind our work. We partner with you at every stage to deliver a
+                        space that perfectly aligns with your needs, budget, and aspirations.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="nav-logo" style="font-size:1.5rem;">Aaditya BuildCons</div>
+                <p>A trusted name in real estate, empowering people to own their dream homes through fair and
+                    transparent contests.</p>
+                <p style="margin-top:1rem;font-size:0.85rem;"><a
+                        href="mailto:ar.aadityasharma@gmail.com">ar.aadityasharma@gmail.com</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="notice.html">Notice</a></li>
+                    <li><a href="status.html">Check Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Aaditya BuildCons. All rights reserved. Licensed Real Estate Company.</span>
+            <span>Formerly known as XCricStock11</span>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

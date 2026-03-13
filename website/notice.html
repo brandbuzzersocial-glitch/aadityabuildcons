@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Important Notice — Aaditya BuildCons</title>
+    <meta name="description"
+        content="Important contest announcement from Aaditya BuildCons. Results will be declared soon." />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .notice-wrap {
+            max-width: 680px;
+            margin: 60px auto 100px;
+            padding: 0 24px;
+        }
+
+        .notice-card {
+            background: linear-gradient(135deg, var(--dark-card), #12100A);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 3.5rem 3rem;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(212, 160, 23, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-card::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(212, 160, 23, 0.12), transparent 70%);
+        }
+
+        .notice-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(212, 160, 23, 0.08), transparent 70%);
+        }
+
+        .notice-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: floatY 4s ease-in-out infinite;
+        }
+
+        .notice-card h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .notice-card .sub {
+            color: var(--gold-mid);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .notice-card p {
+            margin-bottom: 1rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(212, 160, 23, 0.1);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold-bright);
+            margin: 1.5rem auto;
+        }
+
+        .status-badge .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse-gold 2s infinite;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 2rem 0;
+        }
+
+        .info-box {
+            background: rgba(212, 160, 23, 0.05);
+            border: 1px solid rgba(212, 160, 23, 0.15);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+        }
+
+        .info-box .info-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-box .info-val {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--gold-mid);
+        }
+
+        @media (max-width: 500px) {
+            .notice-card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="threejs-canvas"></canvas>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">Aaditya BuildCons</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="notice.html" class="active">Notice</a></li>
+            <li><a href="status.html">Check Status</a></li>
+        </ul>
+        <div class="nav-cta"><a href="status.html" class="btn btn-gold"
+                style="padding:10px 22px;font-size:0.85rem;">Check My Status</a></div>
+        <button class="hamburger"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="mobile-nav">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="terms.html">Terms</a>
+        <a href="notice.html">Notice</a><a href="status.html">Check Status</a>
+        <a href="status.html" class="btn btn-gold" style="margin-top:8px;text-align:center;">Check My Status</a>
+    </div>
+
+    <div class="page-hero">
+        <p class="section-label">Official Announcement</p>
+        <h1><span class="gold-text">Important</span> Notice</h1>
+        <div class="gold-divider"></div>
+    </div>
+
+    <div class="notice-wrap">
+        <div class="notice-card fade-up">
+            <div class="notice-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; margin: 0 auto;">
+                    <path d="M12 2L15 8H9L12 2Z" fill="#FFD700"/>
+                    <path d="M19 6H17V11C17 13.76 14.76 16 12 16C9.24 16 7 13.76 7 11V6H5C3.9 6 3 6.9 3 8V9C3 11.21 4.79 13 7 13V15.5C7 16.83 8.08 17.91 9.4 17.91H10V20H8V22H16V20H14V17.91H14.6C15.92 17.91 17 16.83 17 15.5V13C19.21 13 21 11.21 21 9V8C21 6.9 20.1 6 19 6ZM5 9V8H7V11C7 11.46 6.88 11.88 6.66 12.24C5.7 11.81 5 10.98 5 9ZM19 9C19 10.98 18.3 11.81 17.34 12.24C17.12 11.88 17 11.46 17 11V8H19V9Z" fill="#FFD700"/>
+                </svg>
+            </div>
+            <h2>Contest Result <span class="gold-text">Announcement</span></h2>
+            <p class="sub">The results of the contest will be declared soon</p>
+
+            <div class="status-badge"><span class="live-dot"></span>Results Pending</div>
+
+            <p>Thank you for participating in our contest! We have received an overwhelming response from all
+                participants across India.</p>
+            <p>Our expert jury panel is currently reviewing all submissions based on Originality, Feasibility,
+                Measurable Impact, and Scalability.</p>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-label">Status</div>
+                    <div class="info-val">Under Review</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Notification</div>
+                    <div class="info-val">Email & Phone</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Grand Prize</div>
+                    <div class="info-val">₹60 Lakh Flat</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Cash Winners</div>
+                    <div class="info-val">100+ Selected</div>
+                </div>
+            </div>
+
+            <p>Winners will be contacted via their <strong>registered email and phone number</strong>. Please ensure
+                your contact details are active and accessible.</p>
+            <p style="color: var(--gold-mid); font-weight: 500;">Stay tuned to this website for the official
+                announcement!</p>
+
+            <div style="margin-top: 2rem; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+                <a href="status.html" class="btn btn-gold">Check My Entry Status</a>
+                <a href="index.html" class="btn btn-outline">Go to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="nav-logo" style="font-size:1.5rem;">Aaditya BuildCons</div>
+                <p>A trusted name in real estate, empowering people to own their dream homes through fair and
+                    transparent contests.</p>
+                <p style="margin-top:1rem;font-size:0.85rem;"><a
+                        href="mailto:ar.aadityasharma@gmail.com">ar.aadityasharma@gmail.com</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="notice.html">Notice</a></li>
+                    <li><a href="status.html">Check Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Aaditya BuildCons. All rights reserved. Licensed Real Estate Company.</span>
+            <span>Formerly known as XCricStock11</span>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
