@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aaditya BuildCons — Win Your Dream Home</title>
+  <title>Xeliance Power — Win Your Dream Home</title>
   <meta name="description"
-    content="Join India's most transparent real estate contest. Win a luxury 3BHK flat worth ₹60 Lakhs in Jaipur. Verified process, trusted company." />
+    content="Join India's most transparent real estate contest. Win a luxury 3BHK flat worth ₹80 Lakhs in Jaipur. Verified process, trusted company." />
   <link rel="stylesheet" href="css/style.css" />
   <style>
     /* ══════════════════════════════════════════
@@ -84,7 +84,7 @@
       position: relative;
       z-index: 4;
       text-align: center;
-      padding: 0 24px;
+      padding: 0 24px 160px;
       max-width: 950px;
     }
 
@@ -164,18 +164,27 @@
     .hero-stats-bar {
       position: absolute;
       bottom: 56px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
       z-index: 4;
       display: flex;
-      gap: 0;
+      justify-content: center;
       align-items: stretch;
+      gap: 0;
+      animation: fadeUp 1s 0.5s ease both;
+      pointer-events: none;
+    }
+
+    .hero-stats-bar-inner {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
       background: rgba(8, 7, 14, 0.75);
       border: 1px solid rgba(212, 160, 23, 0.3);
       backdrop-filter: blur(16px);
       border-radius: 60px;
       overflow: hidden;
-      animation: fadeUp 1s 0.5s ease both;
+      pointer-events: all;
     }
 
     .hero-stat-item {
@@ -468,19 +477,45 @@
 
     .prize-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
     }
 
     .prize-card {
       background: var(--dark-card);
       border: 1px solid rgba(212, 160, 23, 0.15);
       border-radius: var(--radius-md);
-      padding: 2rem 1.5rem;
       text-align: center;
       transition: all var(--transition);
       position: relative;
       overflow: hidden;
+    }
+
+    .prize-card-img-wrap {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    .prize-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.88) saturate(1.1);
+      transition: filter var(--transition), transform var(--transition);
+    }
+
+    .prize-card:hover .prize-card-img {
+      filter: brightness(1) saturate(1.25);
+      transform: scale(1.06);
+    }
+
+    .prize-card-body {
+      padding: 1.5rem 1.5rem 2rem;
     }
 
     .prize-card::before {
@@ -489,6 +524,7 @@
       inset: 0;
       background: linear-gradient(135deg, rgba(212, 160, 23, 0.04) 0%, transparent 60%);
       pointer-events: none;
+      z-index: 1;
     }
 
     .prize-card:hover {
@@ -584,21 +620,22 @@
     .how-section .inner {
       max-width: 1100px;
       margin: 0 auto;
+      position: relative;
     }
 
     .steps-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 24px;
       margin-top: 3.5rem;
-      position: relative;
     }
 
     .steps-connector {
       position: absolute;
-      top: 38px;
-      left: 12.5%;
-      right: 12.5%;
+      /* Align with top of the step number circles: heading section is ~200px, grid margin-top is 3.5rem (56px), half circle is 28px */
+      top: calc(200px + 3.5rem + 28px);
+      left: 10%;
+      right: 10%;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold-bright), var(--gold-deep), transparent);
       z-index: 0;
@@ -822,7 +859,7 @@
 
   <!-- ══════════ NAVIGATION ══════════ -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="nav-logo">Aaditya BuildCons</a>
+    <a href="index.html" class="nav-logo">Xeliance Power</a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
@@ -863,8 +900,8 @@
     <!-- YouTube embedded video (autoplay, muted, loop, no controls) -->
     <div class="hero-video-wrap">
       <iframe id="heroVideoFrame"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&showinfo=0&rel=0&disablekb=1&fs=0&iv_load_policy=3&start=0&enablejsapi=1"
-        allow="autoplay; encrypted-media" allowfullscreen title="Family winning their dream home"></iframe>
+        src="https://www.youtube.com/embed/Z_U0M9A_19M?autoplay=1&mute=1&loop=1&playlist=Z_U0M9A_19M&controls=0&showinfo=0&rel=0&disablekb=1&fs=0&iv_load_policy=3&start=0&enablejsapi=1"
+        allow="autoplay; encrypted-media" allowfullscreen title="Showaround video of a flat"></iframe>
     </div>
 
     <div class="hero-overlay"></div>
@@ -872,10 +909,9 @@
     <canvas id="hero-canvas"></canvas>
 
     <div class="hero-content">
-      <div class="hero-eyebrow"><span class="live-dot"></span> Live Contest — Limited Entries Remaining</div>
       <h1 class="hero-title">
         Win a <span class="gold-text">Luxury 3BHK Flat</span>
-        Worth ₹60 Lakhs
+        Worth ₹80 Lakhs
       </h1>
       <p class="hero-sub">India's most transparent real estate contest. Your dream home in the heart of Jaipur — one
         lucky family's entire life changes forever.</p>
@@ -892,21 +928,19 @@
 
     <!-- Floating stats bar -->
     <div class="hero-stats-bar">
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">₹60L</div>
-        <div class="hero-stat-label">Grand Prize</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">100+</div>
-        <div class="hero-stat-label">Cash Winners</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num">₹1,111</div>
-        <div class="hero-stat-label">Entry Fee</div>
-      </div>
-      <div class="hero-stat-item">
-        <div class="hero-stat-num" id="counter-entries">0</div>
-        <div class="hero-stat-label">Entries So Far</div>
+      <div class="hero-stats-bar-inner">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">₹80L</div>
+          <div class="hero-stat-label">Grand Prize</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">100+</div>
+          <div class="hero-stat-label">Cash Winners</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">₹1,999</div>
+          <div class="hero-stat-label">Entry Fee</div>
+        </div>
       </div>
     </div>
 
@@ -965,39 +999,7 @@
   <!-- ══════════════════════════════════════════════════════
      WINNER STORY / SOCIAL PROOF
 ════════════════════════════════════════════════════════ -->
-  <section class="winner-band">
-    <div class="winner-band-inner">
-      <div class="winner-img-wrap fade-up">
-        <img src="images/family_winning.png" alt="Happy family winning their dream home" />
-        <div class="winner-img-badge">
-          <div class="badge-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L15 8H9L12 2Z" fill="#FFD700"/>
-          <path d="M19 6H17V11C17 13.76 14.76 16 12 16C9.24 16 7 13.76 7 11V6H5C3.9 6 3 6.9 3 8V9C3 11.21 4.79 13 7 13V15.5C7 16.83 8.08 17.91 9.4 17.91H10V20H8V22H16V20H14V17.91H14.6C15.92 17.91 17 16.83 17 15.5V13C19.21 13 21 11.21 21 9V8C21 6.9 20.1 6 19 6ZM5 9V8H7V11C7 11.46 6.88 11.88 6.66 12.24C5.7 11.81 5 10.98 5 9ZM19 9C19 10.98 18.3 11.81 17.34 12.24C17.12 11.88 17 11.46 17 11V8H19V9Z" fill="#FFD700"/>
-        </svg>
-      </div>
-          <div class="badge-text">
-            <strong>Your Dream Home Awaits</strong>
-            Main Sikar Road, Jaipur · 1365 sq.ft.
-          </div>
-        </div>
-      </div>
-      <div class="winner-content fade-up fade-up-delay-1">
-        <p class="section-label">Why Families Trust Us</p>
-        <h2>A Real Chance. <span class="gold-text">A Real Home.</span></h2>
-        <div class="gold-divider left"></div>
-        <p>For thousands of families across India, owning a home feels like a distant dream. Aaditya BuildCons was
-          founded to change that — giving every deserving family a fair, honest shot at winning a premium property with
-          zero tricks and full transparency.</p>
-        <div class="winner-quote">
-          <blockquote>"We never imagined we'd own a flat in Jaipur this soon. The process was so smooth and completely
-            genuine."</blockquote>
-          <cite>— Priya & Rajan Sharma, Past Participants · Jaipur</cite>
-        </div>
-        <a href="#contest" class="btn btn-gold">Enter the Contest Today →</a>
-      </div>
-    </div>
-  </section>
+
 
   <!-- ══════════════════════════════════════════════════════
      PRIZE STRUCTURE
@@ -1024,7 +1026,7 @@
             </svg>
             1st Prize — 1 Exclusive Winner
           </div>
-          <div class="grand-prize-value">₹60,00,000</div>
+          <div class="grand-prize-value">₹80,00,000</div>
           <h3 style="margin-bottom:0.75rem;">Luxury 3BHK Flat</h3>
           <p class="grand-prize-detail">1365 sq.ft. fully appointed apartment at <strong>Main Sikar Road,
               Jaipur</strong>. Premier location, luxury fittings, complete legal handover to the winner.</p>
@@ -1058,62 +1060,61 @@
               Jaipur
             </span>
           </div>
-          <a href="#enter" class="btn btn-gold">Participate Now — ₹1,111</a>
+          <a href="#enter" class="btn btn-gold">Participate Now — ₹1,999</a>
         </div>
       </div>
 
       <!-- Other Prizes -->
       <div class="prize-grid">
+
+        <!-- 2nd Prize: BMW Bike -->
         <div class="prize-card fade-up fade-up-delay-1">
-          <span class="prize-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="14" r="7" stroke="var(--gold-mid)" stroke-width="2"/>
-              <path d="M12 14L14 16L10 16L12 14Z" fill="var(--gold-mid)"/>
-              <path d="M15 7L12 2L9 7" stroke="var(--gold-mid)" stroke-width="2"/>
-            </svg>
-          </span>
-          <div class="prize-rank">2nd Prize</div>
-          <div class="prize-amount">₹1,11,000</div>
-          <div class="prize-winners">1 Winner · Cash</div>
+          <div class="prize-card-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop"
+              alt="BMW Motorcycle - 2nd Prize"
+              class="prize-card-img"
+            />
+          </div>
+          <div class="prize-card-body">
+            <div class="prize-rank">2nd Prize</div>
+            <div class="prize-amount">BMW Bike</div>
+            <div class="prize-winners">1 Exclusive Winner</div>
+          </div>
         </div>
-        <div class="prize-card fade-up fade-up-delay-1">
-          <span class="prize-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="14" r="7" stroke="var(--gold-mid)" stroke-width="2"/>
-              <path d="M12 14L10 16H14L12 14Z" fill="var(--gold-mid)"/>
-              <path d="M15 7L12 2L9 7" stroke="var(--gold-mid)" stroke-width="2"/>
-            </svg>
-          </span>
-          <div class="prize-rank">3rd Prize</div>
-          <div class="prize-amount">₹1,11,000</div>
-          <div class="prize-winners">1 Winner · Cash</div>
-        </div>
+
+        <!-- 3rd–9th Prize: ₹51,000 Cash -->
         <div class="prize-card fade-up fade-up-delay-2">
-          <span class="prize-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 15L15 18L12 21L9 18L12 15Z" fill="var(--gold-mid)"/>
-              <path d="M12 2L15 8H9L12 2Z" fill="var(--gold-mid)"/>
-              <circle cx="12" cy="10" r="5" stroke="var(--gold-mid)" stroke-width="2"/>
-            </svg>
-          </span>
-          <div class="prize-rank">4th – 9th Prize</div>
-          <div class="prize-amount">₹51,000</div>
-          <div class="prize-winners">6 Winners · Cash Each</div>
+          <div class="prize-card-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=600&q=80&auto=format&fit=crop"
+              alt="Cash Prize ₹51,000 - 3rd to 9th Prize"
+              class="prize-card-img"
+            />
+          </div>
+          <div class="prize-card-body">
+            <div class="prize-rank">3rd – 9th Prize</div>
+            <div class="prize-amount">₹51,000</div>
+            <div class="prize-winners">7 Winners · Cash Each</div>
+          </div>
         </div>
+
+        <!-- 10th–100th Prize: ₹10,000 Cash -->
         <div class="prize-card fade-up fade-up-delay-3">
-          <span class="prize-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="10" width="16" height="11" rx="2" stroke="var(--gold-mid)" stroke-width="2"/>
-              <path d="M12 10V21" stroke="var(--gold-mid)" stroke-width="2"/>
-              <path d="M4 14H20" stroke="var(--gold-mid)" stroke-width="2"/>
-              <path d="M12 10C12 10 9 5 12 5C15 5 12 10 12 10Z" stroke="var(--gold-mid)" stroke-width="2"/>
-              <path d="M12 10C12 10 15 5 12 5C9 5 12 10 12 10Z" stroke="var(--gold-mid)" stroke-width="2"/>
-            </svg>
-          </span>
-          <div class="prize-rank">10th – 100th Prize</div>
-          <div class="prize-amount">₹10,000</div>
-          <div class="prize-winners">91 Winners · Cash Each</div>
+          <div class="prize-card-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop"
+              alt="Cash Prize ₹10,000 - 10th to 100th Prize"
+              class="prize-card-img"
+            />
+          </div>
+          <div class="prize-card-body">
+            <div class="prize-rank">10th – 100th Prize</div>
+            <div class="prize-amount">₹10,000</div>
+            <div class="prize-winners">91 Winners · Cash Each</div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -1129,8 +1130,8 @@
         <div class="gold-divider"></div>
         <p style="max-width:500px;margin:0 auto;">A simple, transparent 4-step journey to your dream home.</p>
       </div>
+      <div class="steps-connector"></div>
       <div class="steps-grid">
-        <div class="steps-connector"></div>
         <div class="step-card fade-up fade-up-delay-1">
           <div class="step-num">1</div>
           <h3>Fill the Form</h3>
@@ -1139,15 +1140,20 @@
         <div class="step-card fade-up fade-up-delay-2">
           <div class="step-num">2</div>
           <h3>Make Payment</h3>
-          <p>Pay ₹1,111/- via UPI or bank transfer — no hidden charges, no surprises.</p>
+          <p>Pay ₹1,999/- via UPI or bank transfer — no hidden charges, no surprises.</p>
         </div>
         <div class="step-card fade-up fade-up-delay-3">
           <div class="step-num">3</div>
-          <h3>Expert Evaluation</h3>
-          <p>Our independent jury evaluates all entries fairly on merit, not luck.</p>
+          <h3>Answer Simple Question</h3>
+          <p>Respond to a simple question to move forward in the selection process.</p>
         </div>
         <div class="step-card fade-up fade-up-delay-4">
           <div class="step-num">4</div>
+          <h3>Expert Evaluation</h3>
+          <p>Our independent jury evaluates all entries fairly on merit, not luck.</p>
+        </div>
+        <div class="step-card fade-up fade-up-delay-5">
+          <div class="step-num">5</div>
           <h3>Win Your Home</h3>
           <p>Winners are announced publicly on our website and contacted directly.</p>
         </div>
@@ -1161,7 +1167,7 @@
   <section id="enter" class="fee-section">
     <div class="fee-card fade-up">
       <p class="section-label" style="margin-bottom:0.5rem;">Participation Fee</p>
-      <div class="fee-amount">₹1,111</div>
+      <div class="fee-amount">₹1,999</div>
       <p class="fee-label">One-time · Non-refundable · No hidden charges</p>
       <div class="fee-perks">
         <div class="fee-perk">
@@ -1170,7 +1176,7 @@
               <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-Eligible for ₹60 Lakh flat + all prizes
+Eligible for ₹80 Lakh flat + all prizes
         </div>
         <div class="fee-perk">
           <div class="fee-perk-icon">
@@ -1208,7 +1214,7 @@ Eligible for ₹60 Lakh flat + all prizes
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="nav-logo" style="font-size:1.5rem;">Aaditya BuildCons</div>
+        <div class="nav-logo" style="font-size:1.5rem;">Xeliance Power</div>
         <p>A trusted licensed real estate company empowering families to own their dream homes through fair, transparent
           contests.</p>
         <p style="margin-top:1rem;font-size:0.85rem;"><a
@@ -1233,13 +1239,8 @@ Eligible for ₹60 Lakh flat + all prizes
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Aaditya BuildCons. All rights reserved. Licensed Real Estate Company.</span>
-      <span style="color:rgba(212,160,23,0.5);">
-        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z" fill="currentColor"/>
-        </svg>
-      </span>
-      <span>Formerly known as XCricStock11</span>
+      <span>© 2025 Xeliance Power. All rights reserved. Licensed Real Estate Company.</span>
+
     </div>
   </footer>
 
@@ -1298,12 +1299,7 @@ Eligible for ₹60 Lakh flat + all prizes
       });
     })();
 
-    /* ── Entries Counter ── */
-    const counterEl = document.getElementById('counter-entries');
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) { animateCounter(counterEl, 3247); obs.disconnect(); }
-    });
-    obs.observe(counterEl);
+
 
     /* ── Video fallback: hide fallback bg once iframe is ready ── */
     document.getElementById('heroVideoFrame').addEventListener('load', () => {
