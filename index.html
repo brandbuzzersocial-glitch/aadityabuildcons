@@ -1235,42 +1235,60 @@ Eligible for ₹80 Lakh flat + all prizes
         <p>Submit your details and complete the ₹1,999 fee payment to secure your entry.</p>
       </div>
       <form id="contestForm">
-        <div class="form-group-row">
-          <div class="form-group">
-            <label for="reg-name">Full Name *</label>
-            <input type="text" id="reg-name" placeholder="Enter your full name" required>
+        <!-- Step 1: Registration Form -->
+        <div id="step-registration-container">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reg-name">Full Name *</label>
+              <input type="text" id="reg-name" placeholder="Enter your full name" required>
+            </div>
           </div>
-        </div>
-        <div class="form-group-row">
-          <div class="form-group">
-            <label for="reg-email">Email Address *</label>
-            <input type="email" id="reg-email" placeholder="you@example.com" required>
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reg-email">Email Address *</label>
+              <input type="email" id="reg-email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-phone">Phone Number *</label>
+              <input type="tel" id="reg-phone" placeholder="10-digit mobile number" required>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="reg-phone">Phone Number *</label>
-            <input type="tel" id="reg-phone" placeholder="10-digit mobile number" required>
+          <div class="payment-terms-checkbox">
+            <input type="checkbox" id="reg-agree" required>
+            <label for="reg-agree">I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and confirm that all details are accurate.</label>
           </div>
+          
+          <button type="submit" class="btn btn-gold btn-pay-now" style="width:100%;justify-content:center;font-size:1.05rem;margin-top:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;">
+              <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+            Pay ₹1,999 & Register
+          </button>
         </div>
-        <div class="form-group">
-          <label for="reg-solution">Environmental Strategy / Solution *</label>
-          <span style="font-size:0.75rem;color:var(--text-muted);display:block;margin-bottom:6px;">Describe your original strategy or idea to combat urban air pollution and improve environmental sustainability (Min. 30 words). Your entry will be judged on this solution.</span>
-          <textarea id="reg-solution" placeholder="Detail your actionable solution..." rows="5" required></textarea>
+
+        <!-- Step 2: Environmental Strategy (Shown after payment) -->
+        <div id="step-question-container" style="display: none;">
+          <div class="modal-status-msg success" style="display: block; margin-bottom: 20px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;stroke:#4ade80;">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <strong>Payment Verified!</strong> Reference ID: <span id="verified-payment-id" style="font-family:monospace;font-weight:bold;"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-solution">Environmental Strategy / Solution *</label>
+            <span style="font-size:0.75rem;color:var(--text-muted);display:block;margin-bottom:6px;">Describe your original strategy or idea to combat urban air pollution and improve environmental sustainability (Min. 30 words). Your entry will be judged strictly on this solution.</span>
+            <textarea id="reg-solution" placeholder="Detail your actionable solution..." rows="6"></textarea>
+          </div>
+
+          <button type="button" id="btnSubmitQuestion" class="btn btn-gold" style="width:100%;justify-content:center;font-size:1.05rem;margin-top:10px;">
+            Complete Contest Submission
+          </button>
         </div>
-        <div class="payment-terms-checkbox">
-          <input type="checkbox" id="reg-agree" required>
-          <label for="reg-agree">I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and confirm that all details are accurate.</label>
-        </div>
-        
+
         <!-- Error / Status message inside modal -->
         <div id="modalMsg" class="modal-status-msg"></div>
-
-        <button type="submit" class="btn btn-gold btn-pay-now" style="width:100%;justify-content:center;font-size:1.05rem;margin-top:10px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;">
-            <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2.5"/>
-            <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="2.5"/>
-          </svg>
-          Pay ₹1,999 & Register
-        </button>
       </form>
     </div>
   </div>
@@ -1350,6 +1368,20 @@ Eligible for ₹80 Lakh flat + all prizes
       document.body.style.overflow = 'auto'; // Re-enable scroll
       contestForm.reset();
       modalMsg.style.display = 'none';
+
+      // Reset Form Steps
+      document.getElementById('step-registration-container').style.display = 'block';
+      document.getElementById('step-question-container').style.display = 'none';
+
+      // Reset field validators
+      document.getElementById('reg-name').required = true;
+      document.getElementById('reg-email').required = true;
+      document.getElementById('reg-phone').required = true;
+      document.getElementById('reg-agree').required = true;
+      document.getElementById('reg-solution').required = false;
+
+      paymentDetails = null;
+      userDetails = {};
     }
 
     // Bind triggers
@@ -1378,23 +1410,16 @@ Eligible for ₹80 Lakh flat + all prizes
       }
     });
 
-    // Form submission flow
+    let paymentDetails = null; // Memory container for checkout response tokens
+    let userDetails = {}; // Temporary cache for registration details
+
+    // Form submission flow (Step 1: Registration and Payment Checkout Initiation)
     contestForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById('reg-name').value.trim();
-      const email = document.getElementById('reg-email').value.trim();
-      const phone = document.getElementById('reg-phone').value.trim();
-      const solution = document.getElementById('reg-solution').value.trim();
-
-      // Word count validation (Min 30 words)
-      const wordCount = solution.split(/\s+/).filter(Boolean).length;
-      if (wordCount < 30) {
-        modalMsg.className = 'modal-status-msg error';
-        modalMsg.textContent = `Your strategy must be at least 30 words. Currently: ${wordCount} words.`;
-        modalMsg.style.display = 'block';
-        return;
-      }
+      userDetails.name = document.getElementById('reg-name').value.trim();
+      userDetails.email = document.getElementById('reg-email').value.trim();
+      userDetails.phone = document.getElementById('reg-phone').value.trim();
 
       modalMsg.className = 'modal-status-msg info';
       modalMsg.textContent = 'Initiating checkout... Please do not close this window.';
@@ -1421,56 +1446,35 @@ Eligible for ₹80 Lakh flat + all prizes
           description: 'Contest Entry Fee — ₹1,999',
           image: 'images/logo.png',
           order_id: orderData.order_id,
-          handler: async function (response) {
-            modalMsg.className = 'modal-status-msg info';
-            modalMsg.textContent = 'Verifying payment signature...';
-            
-            try {
-              // 3. Send payment signature verification details
-              const verifyResponse = await fetch('/api/verify-payment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  name,
-                  email,
-                  phone,
-                  solution,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature
-                })
-              });
-              const verifyData = await verifyResponse.json();
+          handler: function (response) {
+            // Save payment details inside global closure memory
+            paymentDetails = {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            };
 
-              if (verifyData.success) {
-                modalMsg.className = 'modal-status-msg success';
-                modalMsg.innerHTML = `
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
-                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <strong>Entry Confirmed!</strong><br>
-                  Transaction ID: ${verifyData.payment_id}<br>
-                  Your details have been successfully registered. Good luck!
-                `;
-                setTimeout(() => {
-                  closeModal();
-                  window.location.href = 'status.html';
-                }, 4000);
-              } else {
-                throw new Error(verifyData.error || 'Signature verification failed.');
-              }
-            } catch (verifyErr) {
-              modalMsg.className = 'modal-status-msg error';
-              modalMsg.textContent = verifyErr.message || 'Payment verification failed.';
-            }
+            // Transition Form to Step 2: The Environmental Strategy Question!
+            document.getElementById('step-registration-container').style.display = 'none';
+            document.getElementById('verified-payment-id').textContent = response.razorpay_payment_id;
+
+            // Adjust form validation attributes so they don't block Step 2
+            document.getElementById('reg-name').required = false;
+            document.getElementById('reg-email').required = false;
+            document.getElementById('reg-phone').required = false;
+            document.getElementById('reg-agree').required = false;
+            document.getElementById('reg-solution').required = true;
+
+            document.getElementById('step-question-container').style.display = 'block';
+            modalMsg.style.display = 'none';
           },
           prefill: {
-            name: name,
-            email: email,
-            contact: phone
+            name: userDetails.name,
+            email: userDetails.email,
+            contact: userDetails.phone
           },
           theme: {
-            color: '#D4A017' // Premium Gold
+            color: '#D4A017' // Premium Gold Accent
           }
         };
 
@@ -1484,6 +1488,69 @@ Eligible for ₹80 Lakh flat + all prizes
       } catch (err) {
         modalMsg.className = 'modal-status-msg error';
         modalMsg.textContent = err.message || 'Failed to start transaction. Please try again.';
+      }
+    });
+
+    // Step 2 Submission Handler (Final submission after typing Solution Strategy)
+    document.getElementById('btnSubmitQuestion').addEventListener('click', async () => {
+      const solution = document.getElementById('reg-solution').value.trim();
+
+      // Word count validation (Min 30 words)
+      const wordCount = solution.split(/\s+/).filter(Boolean).length;
+      if (wordCount < 30) {
+        modalMsg.className = 'modal-status-msg error';
+        modalMsg.textContent = `Your strategy must be at least 30 words. Currently: ${wordCount} words.`;
+        modalMsg.style.display = 'block';
+        return;
+      }
+
+      if (!paymentDetails) {
+        modalMsg.className = 'modal-status-msg error';
+        modalMsg.textContent = 'Verified payment session not found. Please try again.';
+        modalMsg.style.display = 'block';
+        return;
+      }
+
+      modalMsg.className = 'modal-status-msg info';
+      modalMsg.textContent = 'Verifying signature and saving contest registration...';
+      modalMsg.style.display = 'block';
+
+      try {
+        const verifyResponse = await fetch('/api/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: userDetails.name,
+            email: userDetails.email,
+            phone: userDetails.phone,
+            solution: solution,
+            razorpay_order_id: paymentDetails.razorpay_order_id,
+            razorpay_payment_id: paymentDetails.razorpay_payment_id,
+            razorpay_signature: paymentDetails.razorpay_signature
+          })
+        });
+        const verifyData = await verifyResponse.json();
+
+        if (verifyData.success) {
+          modalMsg.className = 'modal-status-msg success';
+          modalMsg.innerHTML = `
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <strong>Registration Completed!</strong><br>
+            Transaction ID: ${verifyData.payment_id}<br>
+            Your entry has been securely registered in the cloud. Redirecting...
+          `;
+          setTimeout(() => {
+            closeModal();
+            window.location.href = 'status.html';
+          }, 4000);
+        } else {
+          throw new Error(verifyData.error || 'Signature verification failed.');
+        }
+      } catch (verifyErr) {
+        modalMsg.className = 'modal-status-msg error';
+        modalMsg.textContent = verifyErr.message || 'Payment verification failed.';
       }
     });
   </script>
