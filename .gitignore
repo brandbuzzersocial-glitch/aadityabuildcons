@@ -3,3 +3,5 @@ node_modules/
 ~$*
 scraped_content.doc
 server.js
+.env
+data/

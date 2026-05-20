@@ -8,6 +8,7 @@
   <meta name="description"
     content="Join India's most transparent real estate contest. Win a luxury 3BHK flat worth ₹80 Lakhs in Jaipur. Verified process, trusted company." />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
     /* ══════════════════════════════════════════
        VIDEO HERO
@@ -859,7 +860,7 @@
 
   <!-- ══════════ NAVIGATION ══════════ -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="nav-logo">Xeliance Power</a>
+    <a href="index.html" class="nav-logo has-img"><img src="images/logo.png" alt="Xeliance Power Logo"></a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
@@ -1071,7 +1072,7 @@
         <div class="prize-card fade-up fade-up-delay-1">
           <div class="prize-card-img-wrap">
             <img
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&q=80&auto=format&fit=crop"
               alt="BMW Motorcycle - 2nd Prize"
               class="prize-card-img"
             />
@@ -1087,7 +1088,7 @@
         <div class="prize-card fade-up fade-up-delay-2">
           <div class="prize-card-img-wrap">
             <img
-              src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=600&q=80&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1561414927-6d86591d0c4f?w=600&q=80&auto=format&fit=crop"
               alt="Cash Prize ₹51,000 - 3rd to 9th Prize"
               class="prize-card-img"
             />
@@ -1103,7 +1104,7 @@
         <div class="prize-card fade-up fade-up-delay-3">
           <div class="prize-card-img-wrap">
             <img
-              src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&q=80&auto=format&fit=crop"
               alt="Cash Prize ₹10,000 - 10th to 100th Prize"
               class="prize-card-img"
             />
@@ -1200,9 +1201,9 @@ Eligible for ₹80 Lakh flat + all prizes
           </div>Instant confirmation via email/SMS
         </div>
       </div>
-      <a href="terms.html" class="btn btn-gold"
+      <button id="btnParticipateNow" class="btn btn-gold"
         style="margin-bottom:16px;width:100%;justify-content:center;font-size:1.05rem;">View Full Terms &
-        Participate</a>
+        Participate Now</button>
       <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">By participating, you agree to our <a
           href="policy.html">Privacy Policy</a> and <a href="terms.html">Terms & Conditions</a>.</p>
     </div>
@@ -1214,7 +1215,7 @@ Eligible for ₹80 Lakh flat + all prizes
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="nav-logo" style="font-size:1.5rem;">Xeliance Power</div>
+        <div class="nav-logo has-img" style="font-size:1.5rem;"><img src="images/logo.png" alt="Xeliance Power Logo" style="height: 38px;"></div>
         <p>A trusted licensed real estate company empowering families to own their dream homes through fair, transparent
           contests.</p>
         <p style="margin-top:1rem;font-size:0.85rem;"><a
@@ -1243,6 +1244,55 @@ Eligible for ₹80 Lakh flat + all prizes
 
     </div>
   </footer>
+
+  <!-- ══════════ REGISTRATION MODAL ══════════ -->
+  <div id="paymentModal" class="payment-modal">
+    <div class="payment-modal-content fade-in-scale">
+      <button class="payment-modal-close" id="closePaymentModal">&times;</button>
+      <div class="payment-modal-header">
+        <h2>Contest <span class="gold-text">Registration</span></h2>
+        <p>Submit your details and complete the ₹1,999 fee payment to secure your entry.</p>
+      </div>
+      <form id="contestForm">
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="reg-name">Full Name *</label>
+            <input type="text" id="reg-name" placeholder="Enter your full name" required>
+          </div>
+        </div>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="reg-email">Email Address *</label>
+            <input type="email" id="reg-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="reg-phone">Phone Number *</label>
+            <input type="tel" id="reg-phone" placeholder="10-digit mobile number" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-solution">Environmental Strategy / Solution *</label>
+          <span style="font-size:0.75rem;color:var(--text-muted);display:block;margin-bottom:6px;">Describe your original strategy or idea to combat urban air pollution and improve environmental sustainability (Min. 30 words). Your entry will be judged on this solution.</span>
+          <textarea id="reg-solution" placeholder="Detail your actionable solution..." rows="5" required></textarea>
+        </div>
+        <div class="payment-terms-checkbox">
+          <input type="checkbox" id="reg-agree" required>
+          <label for="reg-agree">I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and confirm that all details are accurate.</label>
+        </div>
+        
+        <!-- Error / Status message inside modal -->
+        <div id="modalMsg" class="modal-status-msg"></div>
+
+        <button type="submit" class="btn btn-gold btn-pay-now" style="width:100%;justify-content:center;font-size:1.05rem;margin-top:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="2.5"/>
+          </svg>
+          Pay ₹1,999 & Register
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- ══════ SCRIPTS ══════ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1304,7 +1354,160 @@ Eligible for ₹80 Lakh flat + all prizes
     /* ── Video fallback: hide fallback bg once iframe is ready ── */
     document.getElementById('heroVideoFrame').addEventListener('load', () => {
       const fallback = document.querySelector('.hero-video-fallback');
-      setTimeout(() => { if (fallback) fallback.style.opacity = '0'; }, 2000);
+      if (fallback) setTimeout(() => { fallback.style.opacity = '0'; }, 2000);
+    });
+
+    /* ── Razorpay Payment & Modal Integration ── */
+    const paymentModal = document.getElementById('paymentModal');
+    const closePaymentModalBtn = document.getElementById('closePaymentModal');
+    const contestForm = document.getElementById('contestForm');
+    const modalMsg = document.getElementById('modalMsg');
+
+    function openModal() {
+      paymentModal.classList.add('open');
+      document.body.style.overflow = 'hidden'; // Disable background scroll
+    }
+
+    function closeModal() {
+      paymentModal.classList.remove('open');
+      document.body.style.overflow = 'auto'; // Re-enable scroll
+      contestForm.reset();
+      modalMsg.style.display = 'none';
+    }
+
+    // Bind triggers
+    const triggerButtons = [
+      document.getElementById('btnParticipateNow'),
+      document.querySelector('.grand-prize-card .btn-gold')
+    ];
+
+    triggerButtons.forEach(btn => {
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      }
+    });
+
+    if (closePaymentModalBtn) {
+      closePaymentModalBtn.addEventListener('click', closeModal);
+    }
+
+    // Close when clicking overlay
+    paymentModal.addEventListener('click', (e) => {
+      if (e.target === paymentModal) {
+        closeModal();
+      }
+    });
+
+    // Form submission flow
+    contestForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const solution = document.getElementById('reg-solution').value.trim();
+
+      // Word count validation (Min 30 words)
+      const wordCount = solution.split(/\s+/).filter(Boolean).length;
+      if (wordCount < 30) {
+        modalMsg.className = 'modal-status-msg error';
+        modalMsg.textContent = `Your strategy must be at least 30 words. Currently: ${wordCount} words.`;
+        modalMsg.style.display = 'block';
+        return;
+      }
+
+      modalMsg.className = 'modal-status-msg info';
+      modalMsg.textContent = 'Initiating checkout... Please do not close this window.';
+      modalMsg.style.display = 'block';
+
+      try {
+        // 1. Create order on the backend
+        const orderResponse = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const orderData = await orderResponse.json();
+
+        if (!orderData.success) {
+          throw new Error(orderData.error || 'Failed to initialize order.');
+        }
+
+        // 2. Configure Razorpay Options
+        const options = {
+          key: 'rzp_live_SrGHxE8Hs4EROH', // Live Key ID
+          amount: orderData.amount,
+          currency: orderData.currency,
+          name: 'Xeliance Power',
+          description: 'Contest Entry Fee — ₹1,999',
+          image: 'images/logo.png',
+          order_id: orderData.order_id,
+          handler: async function (response) {
+            modalMsg.className = 'modal-status-msg info';
+            modalMsg.textContent = 'Verifying payment signature...';
+            
+            try {
+              // 3. Send payment signature verification details
+              const verifyResponse = await fetch('/api/verify-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  name,
+                  email,
+                  phone,
+                  solution,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature
+                })
+              });
+              const verifyData = await verifyResponse.json();
+
+              if (verifyData.success) {
+                modalMsg.className = 'modal-status-msg success';
+                modalMsg.innerHTML = `
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <strong>Entry Confirmed!</strong><br>
+                  Transaction ID: ${verifyData.payment_id}<br>
+                  Your details have been successfully registered. Good luck!
+                `;
+                setTimeout(() => {
+                  closeModal();
+                  window.location.href = 'status.html';
+                }, 4000);
+              } else {
+                throw new Error(verifyData.error || 'Signature verification failed.');
+              }
+            } catch (verifyErr) {
+              modalMsg.className = 'modal-status-msg error';
+              modalMsg.textContent = verifyErr.message || 'Payment verification failed.';
+            }
+          },
+          prefill: {
+            name: name,
+            email: email,
+            contact: phone
+          },
+          theme: {
+            color: '#D4A017' // Premium Gold
+          }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+          modalMsg.className = 'modal-status-msg error';
+          modalMsg.textContent = 'Payment failed: ' + response.error.description;
+        });
+        
+        rzp.open();
+      } catch (err) {
+        modalMsg.className = 'modal-status-msg error';
+        modalMsg.textContent = err.message || 'Failed to start transaction. Please try again.';
+      }
     });
   </script>
 </body>
