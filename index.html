@@ -23,36 +23,23 @@
       overflow: hidden;
     }
 
-    /* YouTube iframe fills entire hero */
-    .hero-video-wrap {
+    /* Premium Ken-Burns Zooming Hero Background */
+    .hero-bg-zoom {
       position: absolute;
       inset: 0;
+      background: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1920&q=80&auto=format&fit=crop') center center / cover no-repeat;
       z-index: 1;
-      overflow: hidden;
+      animation: kenBurns 40s infinite alternate ease-in-out;
       pointer-events: none;
     }
 
-    .hero-video-wrap iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 177.78vh;
-      /* 16/9 * 100vh */
-      height: 100vh;
-      min-width: 100vw;
-      min-height: 56.25vw;
-      /* 9/16 * 100vw */
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      border: none;
-    }
-
-    /* Fallback image shown before iframe loads */
-    .hero-video-fallback {
-      position: absolute;
-      inset: 0;
-      background: url('images/family_winning.png') center center / cover no-repeat;
-      z-index: 0;
+    @keyframes kenBurns {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.1);
+      }
     }
 
     .hero-overlay {
@@ -896,15 +883,8 @@
      HERO — YouTube video of family winning dream home
 ════════════════════════════════════════════════════════ -->
   <section class="hero">
-    <!-- Fallback background image while video loads -->
-    <div class="hero-video-fallback"></div>
-
-    <!-- YouTube embedded video (autoplay, muted, loop, no controls) -->
-    <div class="hero-video-wrap">
-      <iframe id="heroVideoFrame"
-        src="https://www.youtube.com/embed/Z_U0M9A_19M?autoplay=1&mute=1&loop=1&playlist=Z_U0M9A_19M&controls=0&showinfo=0&rel=0&disablekb=1&fs=0&iv_load_policy=3&start=0&enablejsapi=1"
-        allow="autoplay; encrypted-media" allowfullscreen title="Showaround video of a flat"></iframe>
-    </div>
+    <!-- Premium Ken-Burns Zooming Hero Background -->
+    <div class="hero-bg-zoom"></div>
 
     <div class="hero-overlay"></div>
     <div class="hero-gold-vignette"></div>
@@ -1352,11 +1332,7 @@ Eligible for ₹80 Lakh flat + all prizes
 
 
 
-    /* ── Video fallback: hide fallback bg once iframe is ready ── */
-    document.getElementById('heroVideoFrame').addEventListener('load', () => {
-      const fallback = document.querySelector('.hero-video-fallback');
-      if (fallback) setTimeout(() => { fallback.style.opacity = '0'; }, 2000);
-    });
+    /* ── Hero Video Handler Removed to avoid unavailable error screens ── */
 
     /* ── Razorpay Payment & Modal Integration ── */
     const paymentModal = document.getElementById('paymentModal');
