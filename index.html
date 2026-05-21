@@ -1414,6 +1414,11 @@ Eligible for ₹80 Lakh flat + all prizes
     let paymentDetails = null; // Memory container for checkout response tokens
     let userDetails = {}; // Temporary cache for registration details
 
+    function getApiUrl(path) {
+      const base = (window.location.protocol === 'file:') ? 'http://localhost:8086' : '';
+      return `${base}${path}`;
+    }
+
     // Form submission flow (Step 1: Registration and Payment Checkout Initiation)
     contestForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1428,7 +1433,7 @@ Eligible for ₹80 Lakh flat + all prizes
 
       try {
         // 1. Create order on the backend
-        const orderResponse = await fetch('/api/create-order', {
+        const orderResponse = await fetch(getApiUrl('/api/create-order'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -1517,7 +1522,7 @@ Eligible for ₹80 Lakh flat + all prizes
       modalMsg.style.display = 'block';
 
       try {
-        const verifyResponse = await fetch('/api/verify-payment', {
+        const verifyResponse = await fetch(getApiUrl('/api/verify-payment'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

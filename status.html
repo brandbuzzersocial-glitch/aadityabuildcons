@@ -262,8 +262,13 @@
             const status = document.getElementById('resultStatus');
             const msg = document.getElementById('resultMsg');
 
+            function getApiUrl(path) {
+                const base = (window.location.protocol === 'file:') ? 'http://localhost:8086' : '';
+                return `${base}${path}`;
+            }
+
             try {
-                const response = await fetch(`/api/check-status?email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`);
+                const response = await fetch(getApiUrl(`/api/check-status?email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`));
                 const data = await response.json();
 
                 if (data.success && data.found) {
