@@ -17,9 +17,13 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
 
-// Ensure data directory and file exist
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-if (!fs.existsSync(DB_FILE)) fs.writeFileSync(DB_FILE, '[]', 'utf8');
+// Ensure data directory and file exist safely (ignoring read-only filesystem errors in cloud environments)
+try {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(DB_FILE)) fs.writeFileSync(DB_FILE, '[]', 'utf8');
+} catch (err) {
+  console.warn('⚠️ Running in read-only environment (Vercel). Local JSON fallback storage disabled.');
+}
 
 let writeQueue = Promise.resolve(); // Async write lock
 
@@ -32,7 +36,11 @@ function readLocal() {
 }
 
 function writeLocal(records) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(records, null, 2), 'utf8');
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(records, null, 2), 'utf8');
+  } catch (err) {
+    console.error('❌ Failed to write fallback record to disk:', err.message);
+  }
 }
 
 // ─────────────────────────────────────────
