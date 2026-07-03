@@ -466,9 +466,9 @@
 
     .prize-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 24px;
-      max-width: 960px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -759,6 +759,140 @@
       flex-shrink: 0;
     }
 
+    /* ── Tiers Grid & Cards ── */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      text-align: left;
+    }
+
+    .tier-card {
+      background: linear-gradient(135deg, #0E0C02, #1A1205, #0E0C02);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tier-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(212, 160, 23, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(212, 160, 23, 0.6);
+      box-shadow: 0 15px 45px rgba(212, 160, 23, 0.15), 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .tier-card.featured {
+      border-color: var(--gold-mid);
+      box-shadow: 0 0 30px rgba(212, 160, 23, 0.15);
+    }
+
+    .tier-card.featured::before {
+      background: radial-gradient(ellipse at 50% 0%, rgba(212, 160, 23, 0.15) 0%, transparent 60%);
+    }
+
+    .tier-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright));
+      color: #111;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(212, 160, 23, 0.4);
+    }
+
+    .tier-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-price-wrap {
+      margin-bottom: 1.5rem;
+    }
+
+    .tier-price {
+      font-family: var(--font-serif);
+      font-size: 2.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-bright), var(--gold-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .tier-price-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .tier-perks {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .tier-perk {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .tier-perk-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(212, 160, 23, 0.12);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--gold-bright);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Media query update for tier grid */
+    @media (max-width: 900px) {
+      .tier-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 2.5rem auto 0;
+        gap: 20px;
+      }
+    }
+
     /* ══════════════════════════════════════════
        GOLDEN ACCENT SECTION DIVIDER
     ══════════════════════════════════════════ */
@@ -920,8 +1054,8 @@
           <div class="hero-stat-label">Cash Winners</div>
         </div>
         <div class="hero-stat-item">
-          <div class="hero-stat-num">₹1,999</div>
-          <div class="hero-stat-label">Entry Fee</div>
+          <div class="hero-stat-num">₹1,200</div>
+          <div class="hero-stat-label">Starting From</div>
         </div>
       </div>
     </div>
@@ -1042,7 +1176,7 @@
               Jaipur
             </span>
           </div>
-          <a href="#enter" class="btn btn-gold">Participate Now — ₹1,999</a>
+          <a href="#enter" class="btn btn-gold">Participate Now</a>
         </div>
       </div>
 
@@ -1065,35 +1199,54 @@
           </div>
         </div>
 
-        <!-- 3rd–9th Prize: ₹51,000 Cash -->
+        <!-- 3rd Prize: Mystery Box -->
         <div class="prize-card fade-up fade-up-delay-2">
           <div class="prize-card-img-wrap">
             <img
-              src="https://images.unsplash.com/photo-1561414927-6d86591d0c4f?w=600&q=80&auto=format&fit=crop"
-              alt="Cash Prize ₹51,000 - 3rd to 9th Prize"
+              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&q=80&auto=format&fit=crop"
+              alt="Mystery Box - 3rd Prize"
               class="prize-card-img"
             />
           </div>
           <div class="prize-card-body">
-            <div class="prize-rank">3rd – 9th Prize</div>
+            <div class="prize-rank">3rd Prize</div>
+            <div class="prize-amount">Mystery Box</div>
+            <div class="prize-winners">1 Exclusive Winner</div>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; line-height: 1.35; text-align: left;">
+              Worth up to ₹2 Lakh! Premium jackpot (latest iPhone, Dyson Hair Dryer) and viral cosmetics from MAC, Laneige, d'Alba, & Beauty of Joseon.
+            </p>
+          </div>
+        </div>
+
+        <!-- 4th–10th Prize: ₹51,000 Cash -->
+        <div class="prize-card fade-up fade-up-delay-3">
+          <div class="prize-card-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1561414927-6d86591d0c4f?w=600&q=80&auto=format&fit=crop"
+              alt="Cash Prize ₹51,000 - 4th to 10th Prize"
+              class="prize-card-img"
+            />
+          </div>
+          <div class="prize-card-body">
+            <div class="prize-rank">4th – 10th Prize</div>
             <div class="prize-amount">₹51,000</div>
             <div class="prize-winners">7 Winners · Cash Each</div>
           </div>
         </div>
 
-        <!-- 10th–100th Prize: ₹10,000 Cash -->
-        <div class="prize-card fade-up fade-up-delay-3">
+        <!-- 11th–100th Prize: ₹10,000 Cash -->
+        <div class="prize-card fade-up fade-up-delay-4">
           <div class="prize-card-img-wrap">
             <img
               src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&q=80&auto=format&fit=crop"
-              alt="Cash Prize ₹10,000 - 10th to 100th Prize"
+              alt="Cash Prize ₹10,000 - 11th to 100th Prize"
               class="prize-card-img"
             />
           </div>
           <div class="prize-card-body">
-            <div class="prize-rank">10th – 100th Prize</div>
+            <div class="prize-rank">11th – 100th Prize</div>
             <div class="prize-amount">₹10,000</div>
-            <div class="prize-winners">91 Winners · Cash Each</div>
+            <div class="prize-winners">90 Winners · Cash Each</div>
           </div>
         </div>
 
@@ -1147,45 +1300,133 @@
      ENTRY FEE CTA
 ════════════════════════════════════════════════════════ -->
   <section id="enter" class="fee-section">
-    <div class="fee-card fade-up">
-      <p class="section-label" style="margin-bottom:0.5rem;">Participation Fee</p>
-      <div class="fee-amount">₹1,999</div>
-      <p class="fee-label">One-time · Non-refundable · No hidden charges</p>
-      <div class="fee-perks">
-        <div class="fee-perk">
-          <div class="fee-perk-icon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+    <div class="inner">
+      <div class="section-center fade-up" style="margin-bottom:3rem;">
+        <p class="section-label">Participation Options</p>
+        <h2>Select Your <span class="gold-text">Entry Package</span></h2>
+        <div class="gold-divider"></div>
+        <p style="max-width:500px;margin:0 auto;">Choose the tier that suits you best. Every package registers you for the grand draw and all available prizes!</p>
+      </div>
+
+      <div class="tier-grid">
+        <!-- Basic Option -->
+        <div class="tier-card fade-up">
+          <div>
+            <div class="tier-title">Basic Entry</div>
+            <div class="tier-price-wrap">
+              <span class="tier-price">₹1,200</span>
+              <div class="tier-price-sub">One-time payment · Non-refundable</div>
+            </div>
+            <ul class="tier-perks">
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Chance to win any of the prizes (Flat, BMW Bike, Mystery Box, Cash Prizes)
+              </li>
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Verified, legally compliant process
+              </li>
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                100% transparent evaluation & public results
+              </li>
+            </ul>
           </div>
-Eligible for ₹80 Lakh flat + all prizes
+          <button onclick="openModalWithTier(1200, 'Basic Entry')" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:auto;">Select Basic Tier</button>
         </div>
-        <div class="fee-perk">
-          <div class="fee-perk-icon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>Verified, legally compliant process
+
+        <!-- Standard Option -->
+        <div class="tier-card fade-up featured">
+          <div class="tier-badge">Guaranteed Benefit</div>
+          <div>
+            <div class="tier-title" style="color: var(--gold-bright);">Standard Entry</div>
+            <div class="tier-price-wrap">
+              <span class="tier-price">₹2,000</span>
+              <div class="tier-price-sub">One-time payment · Non-refundable</div>
+            </div>
+            <ul class="tier-perks">
+              <li class="tier-perk" style="color: #fff; font-weight: 500;">
+                <span class="tier-perk-icon" style="background: rgba(212, 160, 23, 0.25);">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Guaranteed Cashback included
+              </li>
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Chance to win any of the prizes (Flat, BMW Bike, Mystery Box, Cash Prizes)
+              </li>
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Verified, legally compliant process & transparent evaluation
+              </li>
+            </ul>
+          </div>
+          <button onclick="openModalWithTier(2000, 'Standard Entry')" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:auto;">Select Standard Tier</button>
         </div>
-        <div class="fee-perk">
-          <div class="fee-perk-icon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>100% transparent — results published publicly
-        </div>
-        <div class="fee-perk">
-          <div class="fee-perk-icon">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>Instant confirmation via email/SMS
+
+        <!-- Premium Option -->
+        <div class="tier-card fade-up">
+          <div class="tier-badge">Drawing Pack</div>
+          <div>
+            <div class="tier-title">Premium Entry</div>
+            <div class="tier-price-wrap">
+              <span class="tier-price">₹3,000</span>
+              <div class="tier-price-sub">One-time payment · Non-refundable</div>
+            </div>
+            <ul class="tier-perks">
+              <li class="tier-perk" style="color: #fff; font-weight: 500;">
+                <span class="tier-perk-icon" style="background: rgba(212, 160, 23, 0.25);">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Includes House Drawings & PDF Plans
+              </li>
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Chance to win any of the prizes (Flat, BMW Bike, Mystery Box, Cash Prizes)
+              </li>
+              <li class="tier-perk">
+                <span class="tier-perk-icon">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Verified, legally compliant process & transparent evaluation
+              </li>
+            </ul>
+          </div>
+          <button onclick="openModalWithTier(3000, 'Premium Entry')" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:auto;">Select Premium Tier</button>
         </div>
       </div>
-      <button id="btnParticipateNow" class="btn btn-gold"
-        style="margin-bottom:16px;width:100%;justify-content:center;font-size:1.05rem;">View Full Terms &
-        Participate Now</button>
-      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">By participating, you agree to our <a
+
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:2.5rem;text-align:center;">By participating, you agree to our <a
           href="policy.html">Privacy Policy</a> and <a href="terms.html">Terms & Conditions</a>.</p>
     </div>
   </section>
@@ -1232,7 +1473,7 @@ Eligible for ₹80 Lakh flat + all prizes
       <button class="payment-modal-close" id="closePaymentModal">&times;</button>
       <div class="payment-modal-header">
         <h2>Contest <span class="gold-text">Registration</span></h2>
-        <p>Submit your details and complete the ₹1,999 fee payment to secure your entry.</p>
+        <p id="modal-payment-desc">Submit your details and complete the ₹2,000 fee payment to secure your entry.</p>
       </div>
       <form id="contestForm">
         <!-- Step 1: Registration Form -->
@@ -1253,6 +1494,14 @@ Eligible for ₹80 Lakh flat + all prizes
               <input type="tel" id="reg-phone" placeholder="10-digit mobile number" required>
             </div>
           </div>
+          <div class="form-group" style="margin-bottom:1.5rem;">
+            <label for="reg-tier">Selected Entry Package *</label>
+            <select id="reg-tier" style="width:100%; padding:14px; background:#110f08; border:1px solid rgba(212,160,23,0.3); border-radius:6px; color:#fff; font-size:0.95rem; font-family:inherit; outline:none; transition:border-color 0.2s;" required>
+              <option value="1200">Basic Entry — ₹1,200 (Chance to win all prizes)</option>
+              <option value="2000" selected>Standard Entry — ₹2,000 (Guaranteed Cashback + chance to win all prizes)</option>
+              <option value="3000">Premium Entry — ₹3,000 (House Drawings + chance to win all prizes)</option>
+            </select>
+          </div>
           <div class="payment-terms-checkbox">
             <input type="checkbox" id="reg-agree" required>
             <label for="reg-agree">I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and confirm that all details are accurate.</label>
@@ -1263,7 +1512,7 @@ Eligible for ₹80 Lakh flat + all prizes
               <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2.5"/>
               <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="2.5"/>
             </svg>
-            Pay ₹1,999 & Register
+            <span id="btn-pay-text">Pay ₹2,000 & Register</span>
           </button>
         </div>
 
@@ -1359,9 +1608,33 @@ Eligible for ₹80 Lakh flat + all prizes
     const contestForm = document.getElementById('contestForm');
     const modalMsg = document.getElementById('modalMsg');
 
+    const regTierSelect = document.getElementById('reg-tier');
+    const payBtnText = document.getElementById('btn-pay-text');
+    const payDescription = document.getElementById('modal-payment-desc');
+
+    function updatePayButtonText() {
+      if (!regTierSelect || !payBtnText || !payDescription) return;
+      const selectedAmount = Number(regTierSelect.value);
+      const formattedAmount = selectedAmount.toLocaleString('en-IN');
+      payBtnText.textContent = `Pay ₹${formattedAmount} & Register`;
+      payDescription.textContent = `Submit your details and complete the ₹${formattedAmount} fee payment to secure your entry.`;
+    }
+
+    if (regTierSelect) {
+      regTierSelect.addEventListener('change', updatePayButtonText);
+    }
+
     function openModal() {
       paymentModal.classList.add('open');
       document.body.style.overflow = 'hidden'; // Disable background scroll
+    }
+
+    function openModalWithTier(amount, name) {
+      openModal();
+      if (regTierSelect) {
+        regTierSelect.value = amount;
+        updatePayButtonText();
+      }
     }
 
     function closeModal() {
@@ -1381,24 +1654,11 @@ Eligible for ₹80 Lakh flat + all prizes
       document.getElementById('reg-agree').required = true;
       document.getElementById('reg-solution').required = false;
 
+      updatePayButtonText();
+
       paymentDetails = null;
       userDetails = {};
     }
-
-    // Bind triggers
-    const triggerButtons = [
-      document.getElementById('btnParticipateNow'),
-      document.querySelector('.grand-prize-card .btn-gold')
-    ];
-
-    triggerButtons.forEach(btn => {
-      if (btn) {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          openModal();
-        });
-      }
-    });
 
     if (closePaymentModalBtn) {
       closePaymentModalBtn.addEventListener('click', closeModal);
@@ -1423,9 +1683,15 @@ Eligible for ₹80 Lakh flat + all prizes
     contestForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const selectedTierElement = document.getElementById('reg-tier');
+      const selectedAmount = Number(selectedTierElement.value);
+      const selectedTierName = selectedTierElement.options[selectedTierElement.selectedIndex].text.split('—')[0].trim();
+
       userDetails.name = document.getElementById('reg-name').value.trim();
       userDetails.email = document.getElementById('reg-email').value.trim();
       userDetails.phone = document.getElementById('reg-phone').value.trim();
+      userDetails.amount = selectedAmount;
+      userDetails.tier = selectedTierName;
 
       modalMsg.className = 'modal-status-msg info';
       modalMsg.textContent = 'Initiating checkout... Please do not close this window.';
@@ -1435,7 +1701,8 @@ Eligible for ₹80 Lakh flat + all prizes
         // 1. Create order on the backend
         const orderResponse = await fetch(getApiUrl('/api/create-order'), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: userDetails.amount })
         });
         const orderData = await orderResponse.json();
 
@@ -1449,7 +1716,7 @@ Eligible for ₹80 Lakh flat + all prizes
           amount: orderData.amount,
           currency: orderData.currency,
           name: 'Xeliance Power',
-          description: 'Contest Entry Fee — ₹1,999',
+          description: `Contest Entry Fee — ${userDetails.tier} (₹${Number(userDetails.amount).toLocaleString('en-IN')})`,
           image: 'images/logo.png',
           order_id: orderData.order_id,
           handler: function (response) {
@@ -1530,6 +1797,8 @@ Eligible for ₹80 Lakh flat + all prizes
             email: userDetails.email,
             phone: userDetails.phone,
             solution: solution,
+            amount: userDetails.amount,
+            tier: userDetails.tier,
             razorpay_order_id: paymentDetails.razorpay_order_id,
             razorpay_payment_id: paymentDetails.razorpay_payment_id,
             razorpay_signature: paymentDetails.razorpay_signature

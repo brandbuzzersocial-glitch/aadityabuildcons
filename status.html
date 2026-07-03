@@ -290,6 +290,7 @@
                             <strong>Name:</strong> ${data.entry.name}<br>
                             <strong>Email:</strong> ${data.entry.email}<br>
                             <strong>Phone:</strong> ${data.entry.phone}<br>
+                            ${data.entry.tier ? `<strong>Entry Option:</strong> ${data.entry.tier} (Paid ₹${Number(data.entry.amount).toLocaleString('en-IN')})<br>` : ''}
                             <strong>Payment Reference:</strong> <code style="color:var(--gold-bright);">${data.entry.payment_id}</code><br>
                             <strong>Registration Date:</strong> ${formattedDate}<br>
                             <strong>Status:</strong> <span style="color:#4caf50; font-weight:600;">${data.entry.status}</span>

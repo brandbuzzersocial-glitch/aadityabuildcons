@@ -29,8 +29,19 @@ app.use(express.static(path.join(__dirname)));
  */
 app.post('/api/create-order', async (req, res) => {
   try {
+    const { amount } = req.body;
+
+    // Validate participation package amount
+    const validAmounts = [1200, 2000, 3000];
+    if (!amount || !validAmounts.includes(Number(amount))) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid participation package selection.'
+      });
+    }
+
     const options = {
-      amount: 199900, // ₹1,999 in paise
+      amount: Number(amount) * 100, // amount in paise
       currency: 'INR',
       receipt: `rcpt_contest_${Date.now()}`
     };
@@ -63,6 +74,8 @@ app.post('/api/verify-payment', async (req, res) => {
       email,
       phone,
       solution,
+      amount,
+      tier,
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature
@@ -98,6 +111,8 @@ app.post('/api/verify-payment', async (req, res) => {
       email,
       phone,
       solution: solution || '',
+      amount: amount ? Number(amount) : undefined,
+      tier: tier || '',
       razorpay_order_id,
       razorpay_payment_id,
       payment_status: 'captured'
@@ -159,6 +174,8 @@ app.get('/api/check-status', async (req, res) => {
         name: entry.name,
         email: entry.email,
         phone: entry.phone,
+        amount: entry.amount,
+        tier: entry.tier,
         created_at: entry.created_at,
         payment_id: entry.razorpay_payment_id,
         status: 'Captured & Verified'

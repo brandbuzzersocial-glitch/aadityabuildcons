@@ -74,6 +74,8 @@ const RegistrationSchema = new mongoose.Schema({
   email:                 { type: String, required: true, lowercase: true, trim: true, index: true },
   phone:                 { type: String, required: true, trim: true, index: true },
   solution:              { type: String, default: '', trim: true },
+  amount:                { type: Number },
+  tier:                  { type: String, trim: true },
   razorpay_order_id:     { type: String, required: true },
   razorpay_payment_id:   { type: String, required: true, unique: true },
   payment_status:        { type: String, default: 'captured' },
@@ -98,6 +100,8 @@ async function insert(entry) {
       email: entry.email,
       phone: entry.phone,
       solution: entry.solution || '',
+      amount: entry.amount,
+      tier: entry.tier,
       razorpay_order_id: entry.razorpay_order_id,
       razorpay_payment_id: entry.razorpay_payment_id,
       payment_status: entry.payment_status || 'captured'
@@ -118,6 +122,8 @@ async function insert(entry) {
             email: entry.email.toLowerCase().trim(),
             phone: entry.phone,
             solution: entry.solution || '',
+            amount: entry.amount ? Number(entry.amount) : undefined,
+            tier: entry.tier,
             razorpay_order_id: entry.razorpay_order_id,
             razorpay_payment_id: entry.razorpay_payment_id,
             payment_status: entry.payment_status || 'captured'
