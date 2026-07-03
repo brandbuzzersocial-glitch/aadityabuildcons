@@ -1720,26 +1720,45 @@
           image: 'images/logo.png',
           order_id: orderData.order_id,
           handler: function (response) {
-            // Save payment details inside global closure memory
-            paymentDetails = {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature
-            };
+            try {
+              console.log("Razorpay payment response received:", response);
+              if (!response || !response.razorpay_payment_id) {
+                throw new Error("Invalid payment response structure from Razorpay.");
+              }
 
-            // Transition Form to Step 2: The Environmental Strategy Question!
-            document.getElementById('step-registration-container').style.display = 'none';
-            document.getElementById('verified-payment-id').textContent = response.razorpay_payment_id;
+              // Save payment details inside global closure memory
+              paymentDetails = {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              };
 
-            // Adjust form validation attributes so they don't block Step 2
-            document.getElementById('reg-name').required = false;
-            document.getElementById('reg-email').required = false;
-            document.getElementById('reg-phone').required = false;
-            document.getElementById('reg-agree').required = false;
-            document.getElementById('reg-solution').required = true;
+              // Transition Form to Step 2: The Environmental Strategy Question!
+              const stepReg = document.getElementById('step-registration-container');
+              const stepQuest = document.getElementById('step-question-container');
+              const refIdEl = document.getElementById('verified-payment-id');
 
-            document.getElementById('step-question-container').style.display = 'block';
-            modalMsg.style.display = 'none';
+              if (stepReg && stepQuest && refIdEl) {
+                stepReg.style.display = 'none';
+                refIdEl.textContent = response.razorpay_payment_id;
+
+                // Adjust form validation attributes so they don't block Step 2
+                document.getElementById('reg-name').required = false;
+                document.getElementById('reg-email').required = false;
+                document.getElementById('reg-phone').required = false;
+                document.getElementById('reg-agree').required = false;
+                document.getElementById('reg-solution').required = true;
+
+                stepQuest.style.display = 'block';
+                modalMsg.style.display = 'none';
+                console.log("Form successfully transitioned to Step 2.");
+              } else {
+                throw new Error("Form step containers or ref ID elements not found in DOM.");
+              }
+            } catch (err) {
+              console.error("Transition to Step 2 failed:", err);
+              alert("Payment was successful (ID: " + (response ? response.razorpay_payment_id : "unknown") + "), but failed to load the strategy form. Error: " + err.message);
+            }
           },
           prefill: {
             name: userDetails.name,
@@ -1824,8 +1843,11 @@
           throw new Error(verifyData.error || 'Signature verification failed.');
         }
       } catch (verifyErr) {
+        console.error("Signature verification / DB save failed:", verifyErr);
         modalMsg.className = 'modal-status-msg error';
         modalMsg.textContent = verifyErr.message || 'Payment verification failed.';
+        modalMsg.style.display = 'block';
+        alert("Payment verification failed. Error: " + verifyErr.message);
       }
     });
   </script>
