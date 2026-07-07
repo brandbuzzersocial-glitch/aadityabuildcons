@@ -92,61 +92,73 @@ const Registration = mongoose.models.Registration || mongoose.model('Registratio
 // PUBLIC API
 // ─────────────────────────────────────────
 
+// Helper for local JSON insertion
+function insertLocal(entry) {
+  return new Promise((resolve, reject) => {
+    writeQueue = writeQueue.then(() => {
+      try {
+        const records = readLocal();
+        const newRecord = {
+          id: `REG_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          created_at: new Date().toISOString(),
+          name: entry.name,
+          email: entry.email.toLowerCase().trim(),
+          phone: entry.phone,
+          solution: entry.solution || '',
+          amount: entry.amount ? Number(entry.amount) : undefined,
+          tier: entry.tier,
+          razorpay_order_id: entry.razorpay_order_id,
+          razorpay_payment_id: entry.razorpay_payment_id,
+          payment_status: entry.payment_status || 'captured'
+        };
+        records.push(newRecord);
+        writeLocal(records);
+        console.log('✅ [Local JSON] Registration saved:', newRecord.razorpay_payment_id);
+        resolve(newRecord);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  });
+}
+
 /**
  * Insert a new verified registration.
- * Uses MongoDB if connected, otherwise falls back to local JSON.
+ * Uses MongoDB if configured, otherwise falls back to local JSON.
  */
 async function insert(entry) {
-  if (mongoConnected && mongoose.connection.readyState === 1) {
-    // Cloud path
-    const doc = new Registration({
-      name: entry.name,
-      email: entry.email,
-      phone: entry.phone,
-      solution: entry.solution || '',
-      amount: entry.amount,
-      tier: entry.tier,
-      razorpay_order_id: entry.razorpay_order_id,
-      razorpay_payment_id: entry.razorpay_payment_id,
-      payment_status: entry.payment_status || 'captured'
-    });
-    const saved = await doc.save();
-    console.log('✅ [MongoDB] Registration saved:', saved.razorpay_payment_id);
-    return saved;
-  } else {
-    // Local JSON fallback path — queue-locked for concurrent safety
-    return new Promise((resolve, reject) => {
-      writeQueue = writeQueue.then(() => {
-        try {
-          const records = readLocal();
-          const newRecord = {
-            id: `REG_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-            created_at: new Date().toISOString(),
-            name: entry.name,
-            email: entry.email.toLowerCase().trim(),
-            phone: entry.phone,
-            solution: entry.solution || '',
-            amount: entry.amount ? Number(entry.amount) : undefined,
-            tier: entry.tier,
-            razorpay_order_id: entry.razorpay_order_id,
-            razorpay_payment_id: entry.razorpay_payment_id,
-            payment_status: entry.payment_status || 'captured'
-          };
-          records.push(newRecord);
-          writeLocal(records);
-          console.log('✅ [Local JSON] Registration saved:', newRecord.razorpay_payment_id);
-          resolve(newRecord);
-        } catch (err) {
-          reject(err);
-        }
+  if (isMongoConfigured) {
+    try {
+      const doc = new Registration({
+        name: entry.name,
+        email: entry.email,
+        phone: entry.phone,
+        solution: entry.solution || '',
+        amount: entry.amount,
+        tier: entry.tier,
+        razorpay_order_id: entry.razorpay_order_id,
+        razorpay_payment_id: entry.razorpay_payment_id,
+        payment_status: entry.payment_status || 'captured'
       });
-    });
+      const saved = await doc.save();
+      console.log('✅ [MongoDB] Registration saved:', saved.razorpay_payment_id);
+      return saved;
+    } catch (err) {
+      console.error('❌ [MongoDB] Insert failed:', err.message);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('⚠️ Falling back to local JSON database for insertion.');
+        return await insertLocal(entry);
+      }
+      throw err;
+    }
+  } else {
+    return await insertLocal(entry);
   }
 }
 
 /**
  * Find a registration by email or phone.
- * Uses MongoDB if connected, otherwise falls back to local JSON.
+ * Uses MongoDB if configured, otherwise falls back to local JSON.
  */
 async function findEntry(email, phone) {
   const searchEmail = (email || '').toLowerCase().trim();
@@ -154,11 +166,25 @@ async function findEntry(email, phone) {
 
   if (!searchEmail && !searchPhone) return null;
 
-  if (mongoConnected && mongoose.connection.readyState === 1) {
-    const conditions = [];
-    if (searchEmail) conditions.push({ email: searchEmail });
-    if (searchPhone) conditions.push({ phone: searchPhone });
-    return await Registration.findOne({ $or: conditions });
+  if (isMongoConfigured) {
+    try {
+      const conditions = [];
+      if (searchEmail) conditions.push({ email: searchEmail });
+      if (searchPhone) conditions.push({ phone: searchPhone });
+      return await Registration.findOne({ $or: conditions });
+    } catch (err) {
+      console.error('❌ [MongoDB] Find entry failed:', err.message);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('⚠️ Falling back to local JSON database for findEntry.');
+        const records = readLocal();
+        return records.find(r => {
+          if (searchEmail && r.email === searchEmail) return true;
+          if (searchPhone && r.phone === searchPhone) return true;
+          return false;
+        }) || null;
+      }
+      throw err;
+    }
   } else {
     const records = readLocal();
     return records.find(r => {
@@ -173,8 +199,16 @@ async function findEntry(email, phone) {
  * Get all registered participants.
  */
 async function getAll() {
-  if (mongoConnected && mongoose.connection.readyState === 1) {
-    return await Registration.find({});
+  if (isMongoConfigured) {
+    try {
+      return await Registration.find({});
+    } catch (err) {
+      console.error('❌ [MongoDB] GetAll failed:', err.message);
+      if (process.env.NODE_ENV !== 'production') {
+        return readLocal();
+      }
+      throw err;
+    }
   } else {
     return readLocal();
   }
