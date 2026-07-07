@@ -46,7 +46,7 @@ function writeLocal(records) {
 // ─────────────────────────────────────────
 // MONGODB ATLAS SETUP (OPTIONAL)
 // ─────────────────────────────────────────
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = (process.env.MONGODB_URI || '').trim();
 let mongoConnected = false;
 
 const PLACEHOLDER = 'YOUR_MONGODB_ATLAS_CONNECTION_STRING_HERE';
