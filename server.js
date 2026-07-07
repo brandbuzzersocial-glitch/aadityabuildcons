@@ -209,11 +209,21 @@ app.get('/api/debug-db', async (req, res) => {
     const rawUri = process.env.MONGODB_URI || '';
     const redactedUri = rawUri.replace(/:([^@]+)@/, ':******@');
 
+    let connectError = null;
+    if (mongoose.connection.readyState !== 1) {
+      try {
+        await mongoose.connect(rawUri.trim());
+      } catch (err) {
+        connectError = err.message;
+      }
+    }
+
     res.status(200).json({
       success: true,
       readyState: mongoose.connection.readyState,
       mongoUriRedacted: redactedUri || 'NOT_CONFIGURED',
-      envNodeEnv: process.env.NODE_ENV || 'undefined'
+      envNodeEnv: process.env.NODE_ENV || 'undefined',
+      connectionError: connectError
     });
   } catch (err) {
     res.status(500).json({
