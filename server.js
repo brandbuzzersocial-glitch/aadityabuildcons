@@ -198,7 +198,7 @@ app.get('/api/check-status', async (req, res) => {
     console.error('Error fetching entry status:', err);
     res.status(500).json({
       success: false,
-      error: 'An error occurred during status lookup. Please try again.'
+      error: err.message || 'An error occurred during status lookup. Please try again.'
     });
   }
 });
