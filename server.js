@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const path = require('path');
 const Razorpay = require('razorpay');
 const db = require('./js/db');
+const emailHelper = require('./js/email');
 
 const app = express();
 const PORT = process.env.PORT || 8086;
@@ -122,6 +123,18 @@ app.post('/api/verify-payment', async (req, res) => {
     try {
       record = await db.insert(registrationData);
       console.log('✅ Registration saved to database:', razorpay_payment_id);
+
+      // Asynchronously trigger confirmation email so SMTP network latency doesn't slow down the response
+      emailHelper.sendConfirmationEmail(email, {
+        name,
+        phone,
+        tier,
+        amount,
+        payment_id: razorpay_payment_id,
+        solution: solution || ''
+      }).catch(mailErr => {
+        console.error('⚠️  Async email delivery trigger failed:', mailErr.message);
+      });
     } catch (dbErr) {
       // DB failure must NOT block payment confirmation — payment is already verified
       console.error('⚠️  DB save failed (payment still valid):', dbErr.message);

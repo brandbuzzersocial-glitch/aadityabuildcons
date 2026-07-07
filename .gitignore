@@ -5,3 +5,6 @@ scraped_content.doc
 
 .env
 data/
+
+.vercel
+.env*.local

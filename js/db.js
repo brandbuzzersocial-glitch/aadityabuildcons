@@ -53,7 +53,11 @@ const PLACEHOLDER = 'YOUR_MONGODB_ATLAS_CONNECTION_STRING_HERE';
 const isMongoConfigured = mongoURI && !mongoURI.includes(PLACEHOLDER);
 
 if (isMongoConfigured) {
-  mongoose.connect(mongoURI, { serverSelectionTimeoutMS: 5000 })
+  mongoose.connect(mongoURI, {
+    serverSelectionTimeoutMS: 15000,   // Give Atlas 15 seconds to respond
+    connectTimeoutMS: 15000,
+    socketTimeoutMS: 45000,
+  })
     .then(() => {
       mongoConnected = true;
       console.log('✅ Successfully connected to Cloud MongoDB Database Cluster.');

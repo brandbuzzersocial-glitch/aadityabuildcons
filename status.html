@@ -318,6 +318,22 @@
             box.classList.add('show');
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+
+        // Auto-load receipt if redirected with URL parameters
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const emailParam = params.get('email');
+            const phoneParam = params.get('phone');
+
+            if (emailParam && phoneParam) {
+                document.getElementById('email').value = emailParam;
+                document.getElementById('phone').value = phoneParam;
+                
+                // Trigger check automatically
+                const mockEvent = { preventDefault: () => {} };
+                handleCheck(mockEvent);
+            }
+        });
     </script>
 </body>
 
