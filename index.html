@@ -988,10 +988,6 @@
       transform: translate(-50%, -50%);
       object-fit: cover;
       pointer-events: none;
-      opacity: 0;
-      transition: opacity 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    .hero-video-bg.loaded {
       opacity: 0.8;
     }
 
@@ -1137,8 +1133,6 @@
      HERO — YouTube video of family winning dream home
 ════════════════════════════════════════════════════════ -->
   <section class="hero">
-    <!-- Premium Ken-Burns Zooming Hero Background -->
-    <div class="hero-bg-zoom"></div>
 
     <!-- Muted Auto-playing Background Video -->
     <video class="hero-video-bg" id="hero-video" autoplay muted loop playsinline preload="auto">
@@ -2147,26 +2141,22 @@
     // ── Video Elements Control Scripting ──
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Hero background video fade-in
+      // 1. Hero background video autoplay force (especially for mobile)
       const heroVid = document.getElementById('hero-video');
       if (heroVid) {
-        // If already loaded or ready
-        if (heroVid.readyState >= 3) {
-          heroVid.classList.add('loaded');
-        } else {
-          heroVid.addEventListener('canplaythrough', () => {
-            heroVid.classList.add('loaded');
-          });
-        }
-        
-        // Playing event check
-        heroVid.addEventListener('playing', () => {
-          heroVid.classList.add('loaded');
+        // Try playing immediately
+        heroVid.play().catch(e => {
+          console.warn("Hero video autoplay blocked on load, waiting for interaction:", e);
         });
 
-        // Backup safety fallback
-        setTimeout(() => {
-          heroVid.classList.add('loaded');
-        }, 1500);
+        // Force play on first touch or click
+        const forcePlay = () => {
+          heroVid.play().catch(e => console.log("Force play failed:", e));
+          document.removeEventListener('touchstart', forcePlay);
+          document.removeEventListener('click', forcePlay);
+        };
+        document.addEventListener('touchstart', forcePlay, { passive: true });
+        document.addEventListener('click', forcePlay);
       }
 
       // 2. Interactive Video Tour controls
