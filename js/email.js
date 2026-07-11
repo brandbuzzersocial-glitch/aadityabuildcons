@@ -242,7 +242,7 @@ async function sendConfirmationEmail(toEmail, details) {
         <div class="footer">
           © 2025 Xeliance Power. All rights reserved.<br>
           Licensed Real Estate Company · Jaipur, Rajasthan, India.<br>
-          For queries, contact <a href="mailto:ar.aadityasharma@gmail.com">ar.aadityasharma@gmail.com</a>
+          For queries, contact <a href="mailto:Xeliancepower@gmail.com">Xeliancepower@gmail.com</a>
         </div>
       </div>
     </body>
