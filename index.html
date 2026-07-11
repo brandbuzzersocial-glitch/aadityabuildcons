@@ -1655,6 +1655,7 @@
             <input type="checkbox" id="reg-agree" required>
             <label for="reg-agree">I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and confirm that all details are accurate.</label>
           </div>
+          <div id="lookup-info-message" style="display:none; margin: 15px 0; padding: 12px; border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 6px; background: rgba(76, 175, 80, 0.05); color: #4caf50; font-size: 0.85rem; line-height: 1.4; text-align: left;"></div>
           
           <button type="submit" class="btn btn-gold btn-pay-now" style="width:100%;justify-content:center;font-size:1.05rem;margin-top:10px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;">
@@ -1833,6 +1834,9 @@
       }
 
       updatePayButtonText();
+      if (typeof clearExistingEntryUI === 'function') {
+        clearExistingEntryUI();
+      }
 
       paymentDetails = null;
       userDetails = {};
@@ -1871,9 +1875,92 @@
       return `${base}${path}`;
     }
 
+    let existingEntryFound = false;
+
+    async function performLookup() {
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      
+      const hasEmail = email && email.includes('@');
+      const hasPhone = phone && phone.replace(/[^0-9]/g, '').length >= 8;
+
+      if (!hasEmail && !hasPhone) {
+        clearExistingEntryUI();
+        return;
+      }
+
+      try {
+        const query = [];
+        if (hasEmail) query.push(`email=${encodeURIComponent(email)}`);
+        if (hasPhone) query.push(`phone=${encodeURIComponent(phone)}`);
+        
+        const response = await fetch(getApiUrl(`/api/check-status?${query.join('&')}`));
+        const data = await response.json();
+
+        if (data.success && data.found) {
+          existingEntryFound = true;
+          if (data.entry.name) {
+            document.getElementById('reg-name').value = data.entry.name;
+          }
+          if (data.entry.email && !email) {
+            document.getElementById('reg-email').value = data.entry.email;
+          }
+          if (data.entry.phone && !phone) {
+            document.getElementById('reg-phone').value = data.entry.phone;
+          }
+          
+          const msgContainer = document.getElementById('lookup-info-message');
+          if (msgContainer) {
+            msgContainer.innerHTML = `
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:6px; color:#4caf50;">
+                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <strong>We found your previous entry!</strong> You have already registered for this contest. Click below to verify your entry status.
+            `;
+            msgContainer.style.display = 'block';
+          }
+
+          document.getElementById('reg-agree').checked = true;
+          document.getElementById('reg-agree').disabled = true;
+
+          const btnText = document.getElementById('btn-pay-text');
+          if (btnText) btnText.textContent = "View My Entry Status";
+        } else {
+          clearExistingEntryUI();
+        }
+      } catch (err) {
+        console.error("Autofill lookup error:", err);
+      }
+    }
+
+    function clearExistingEntryUI() {
+      if (!existingEntryFound) return;
+      existingEntryFound = false;
+      const msgContainer = document.getElementById('lookup-info-message');
+      if (msgContainer) {
+        msgContainer.style.display = 'none';
+      }
+      document.getElementById('reg-agree').disabled = false;
+      updatePayButtonText();
+    }
+
+    // Attach listeners for autofill lookup
+    document.getElementById('reg-email').addEventListener('blur', performLookup);
+    document.getElementById('reg-phone').addEventListener('blur', performLookup);
+    document.getElementById('reg-email').addEventListener('change', performLookup);
+    document.getElementById('reg-phone').addEventListener('change', performLookup);
+
     // Form submission flow (Step 1: Registration and Payment Checkout Initiation)
     contestForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      if (existingEntryFound) {
+        const email = document.getElementById('reg-email').value.trim();
+        const phone = document.getElementById('reg-phone').value.trim();
+        closeModal();
+        window.location.href = `status.html?email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
+        return;
+      }
 
       const selectedTierElement = document.getElementById('reg-tier');
       const selectedAmount = Number(selectedTierElement.value);
@@ -2040,8 +2127,10 @@
             Your entry has been securely registered in the cloud. Redirecting...
           `;
           setTimeout(() => {
+            const email = userDetails.email;
+            const phone = userDetails.phone;
             closeModal();
-            window.location.href = `status.html?email=${encodeURIComponent(userDetails.email)}&phone=${encodeURIComponent(userDetails.phone)}`;
+            window.location.href = `status.html?email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`;
           }, 4000);
         } else {
           throw new Error(verifyData.error || 'Signature verification failed.');

@@ -193,11 +193,11 @@
             <form id="statusForm" onsubmit="handleCheck(event)">
                 <div class="form-group">
                     <label for="email">Registered Email Address</label>
-                    <input type="email" id="email" placeholder="you@example.com" required />
+                    <input type="email" id="email" placeholder="you@example.com" />
                 </div>
                 <div class="form-group">
                     <label for="phone">Registered Phone Number</label>
-                    <input type="tel" id="phone" placeholder="+91 99999 99999" required />
+                    <input type="tel" id="phone" placeholder="+91 99999 99999" />
                 </div>
                 <button type="submit" class="btn-submit">Check My Status</button>
             </form>
@@ -262,6 +262,19 @@
             const status = document.getElementById('resultStatus');
             const msg = document.getElementById('resultMsg');
 
+            if (!email && !phone) {
+                status.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 8px;">
+                        <circle cx="12" cy="12" r="10" stroke="#f44336" stroke-width="2"/>
+                        <path d="M12 8v4M12 16h.01" stroke="#f44336" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span style="color:#f44336;">Input Error</span>`;
+                msg.textContent = 'Please enter either your registered email address or phone number to check status.';
+                box.classList.add('show');
+                box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
             function getApiUrl(path) {
                 const base = (window.location.protocol === 'file:') ? 'http://localhost:8086' : '';
                 return `${base}${path}`;
@@ -325,9 +338,12 @@
             const emailParam = params.get('email');
             const phoneParam = params.get('phone');
 
-            if (emailParam && phoneParam) {
-                document.getElementById('email').value = emailParam;
-                document.getElementById('phone').value = phoneParam;
+            const hasEmail = emailParam && emailParam !== 'undefined';
+            const hasPhone = phoneParam && phoneParam !== 'undefined';
+
+            if (hasEmail || hasPhone) {
+                if (hasEmail) document.getElementById('email').value = emailParam;
+                if (hasPhone) document.getElementById('phone').value = phoneParam;
                 
                 // Trigger check automatically
                 const mockEvent = { preventDefault: () => {} };
