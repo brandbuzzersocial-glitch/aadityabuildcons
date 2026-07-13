@@ -42,7 +42,7 @@ app.post('/api/create-order', async (req, res) => {
     }
 
     const options = {
-      amount: 100, // Hardcoded to ₹1 (100 paise) for testing live checkouts
+      amount: Number(amount) * 100, // actual amount in paise (1 INR = 100 paise)
       currency: 'INR',
       receipt: `rcpt_contest_${Date.now()}`
     };
